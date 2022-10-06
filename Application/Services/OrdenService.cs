@@ -10,6 +10,7 @@ namespace Application.Services
     {
         private readonly IOrdenRepository _repository;
 
+
         public OrdenService(IOrdenRepository repository)
         {
             _repository = repository;
@@ -19,6 +20,5 @@ namespace Application.Services
         {
             return _repository.CreateOrden(order);
         }
-
     }
 }

@@ -1,12 +1,14 @@
 ﻿using Application.Services.Interfaces;
 using Application.Utilities.Validations;
 using Domain.Entities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Presentation
 {
      public class DeadMenu
      {
-          private static void RegistrarCliente(IClienteService service)
+
+          private static void RegistrarCliente(IClienteService clienteService)
           {
                Console.Clear();
 
@@ -24,13 +26,13 @@ namespace Presentation
                     }
                     else
                     {
-                         if (service.GetClienteByDNI(dni) != null)
+                         if (clienteService.GetClienteByDNI(dni) != null)
                          {
                               Console.WriteLine("El dni ingresado es de un cliente existente");
                          }
                          else
                          {
-                              var ClienteCreado = service.CreateClient(
+                              var ClienteCreado = clienteService.CreateClient(
                                   dni,
                                   nombre,
                                   apellido,
@@ -48,16 +50,16 @@ namespace Presentation
           }
 
           private static void RegistrarVenta(
-              IClienteService service2,
-              ICarritoService service3,
-              IOrdenService service4,
-              IProductService service5
+              IClienteService clienteService,
+              ICarritoService carritoService,
+              IOrdenService ordenService,
+              IProductService productService
           )
           {
                Console.Clear();
                bool stillBuying = true;
                Console.WriteLine("Nueva venta");
-               List<Cliente> clients = service2.ShowClientes();
+               List<Cliente> clients = clienteService.ShowClientes();
                Console.WriteLine("Lista de Clientes  : ");
                foreach (var cl in clients)
                {
@@ -74,7 +76,7 @@ namespace Presentation
                    1,
                    clients.Count
                );
-               var cliente = service2.GetClienteById(client); // buscamos cliente.
+               var cliente = clienteService.GetClienteById(client); // buscamos cliente.
                var carritoCliente = new Carrito()
                {
                     CarritoId = Guid.NewGuid(),
@@ -84,12 +86,12 @@ namespace Presentation
                string ask = InputValidations.YesOrNoInput("Desea agregar Productos? (Si o No): ");
                if (ask == "si")
                {
-                    service3.CreateCarrito(carritoCliente);
+                    carritoService.CreateCarrito(carritoCliente);
                     Console.Clear();
                     Console.WriteLine("Agregar productos");
                     Console.Clear();
                     Console.WriteLine("Mostrando Lista de productos disponibles ...");
-                    List<Producto> products = service5.ShowProducts();
+                    List<Producto> products = productService.ShowProducts();
                     foreach (var pr in products)
                     {
                          Console.WriteLine(
@@ -122,13 +124,13 @@ namespace Presentation
                               ProductoId = product,
                          };
                          carritoCliente.CarritoProductos.Add(carritoProduct);
-                         service3.CreateCarritoProducto(carritoProduct);
+                         carritoService.CreateCarritoProducto(carritoProduct);
                          stillBuying2 = InputValidations.YesOrNoInput(
                              "desea seguir comprando? responder con Sí o No : "
                          );
                     }
 
-                    service3.UpdateCarrito(carritoCliente);
+                    carritoService.UpdateCarrito(carritoCliente);
                }
                string modify = InputValidations.YesOrNoInput("Desea Eliminar Productos? (Si o No): ");
                if (modify == "si")
@@ -145,7 +147,28 @@ namespace Presentation
                     }
                     else
                     {
-                         service3.MostrarCarrito(carritoCliente.CarritoId);
+                         if (carritoCliente.CarritoProductos.Count != 0)
+                         {
+                              Console.WriteLine("MOSTRANDO CARRITO");
+                              int count = 1;
+                              foreach (var pr in carritoCliente.CarritoProductos)
+                              {
+                                   Console.WriteLine(
+                                       "{0} ) || producto: {1} || precio: {2} || marca: {3} || descripcion: {4}",
+                                       count,
+                                       pr.Producto.Nombre,
+                                       pr.Producto.Precio,
+                                       pr.Producto.Marca,
+                                       pr.Producto.Descripcion
+                                   );
+                                   Console.WriteLine("");
+                                   count++;
+                              }
+                         }
+                         else
+                         {
+                              Console.WriteLine("el carrito está vacio... ");
+                         }
                     }
                     if (IsEmpty == false)
                     {
@@ -158,8 +181,8 @@ namespace Presentation
                                        1,
                                        carritoCliente.CarritoProductos.Count
                                    );
-                                   service3.DeleteCarritoProducto(
-                                       service3.GetCarritoProductoById(carritoCliente.CarritoId, product)
+                                   carritoService.DeleteCarritoProducto(
+                                       carritoService.GetCarritoProductoById(carritoCliente.CarritoId, product)
                                    );
                                    string askDelete = InputValidations.YesOrNoInput(
                                        "desea seguir eliminando? responder con Sí o No : "
@@ -177,14 +200,14 @@ namespace Presentation
                                    stillBuying = false;
                               }
                          }
-                        ;
-                         service3.UpdateCarrito(carritoCliente);
+                        
+                         carritoService.UpdateCarrito(carritoCliente);
                     }
                }
                string stillBuyingValidate = InputValidations.YesOrNoInput(
                    "Desea confirmar la compra? responder con Sí o No : "
                );
-               carritoCliente = service3.GetCarritoById(carritoCliente.CarritoId);
+               carritoCliente = carritoService.GetCarritoById(carritoCliente.CarritoId);
                if (stillBuyingValidate == "si")
                {
                     var orden = new Orden
@@ -194,19 +217,21 @@ namespace Presentation
                          Fecha = DateTime.Now,
                          Total = SumValidations.SumarTotal(carritoCliente)
                     };
-                    service4.CreateOrden(orden);
+                    ordenService.CreateOrden(orden);
                     carritoCliente.Estado = false;
-                    service3.UpdateCarrito(carritoCliente);
+                    carritoService.UpdateCarrito(carritoCliente);
                     Console.WriteLine("Se ha completado la compra");
                     Console.ReadLine();
                }
+               carritoCliente.Estado = false;
+               carritoService.UpdateCarrito(carritoCliente);
           }
 
-          private static void MostrarCarrito(IClienteService service1, ICarritoService service3)
+          private static void MostrarCarrito(IClienteService clienteService, ICarritoService carritoService)
           {
                Console.Clear();
                Console.WriteLine("Lista de Clientes  : ");
-               List<Cliente> client = service1.ShowClientes();
+               List<Cliente> client = clienteService.ShowClientes();
 
                foreach (var pr in client)
                {
@@ -219,23 +244,47 @@ namespace Presentation
                     Console.WriteLine("");
                }
                int select = InputValidations.IntInput("Ingresar : ", 1, client.Count);
-               Cliente carrito = service1.GetClienteById(select);
-               Carrito carro = service3.GetCarritoByClientId(carrito.ClienteId);
+               Cliente carrito = clienteService.GetClienteById(select);
+               Carrito carro = carritoService.GetCarritoByClientId(carrito.ClienteId);
                if (carro != null)
                {
                     if (carro.Estado == true)
                     {
-                         service3.MostrarCarrito(carro.CarritoId);
+                         if (carro.CarritoProductos.Count != 0)
+                         {
+                              Console.WriteLine("MOSTRANDO CARRITO");
+                              int count = 1;
+                              foreach (var pr in carro.CarritoProductos)
+                              {
+                                   Console.WriteLine(
+                                       "{0} ) || producto: {1} || precio: {2} || marca: {3} || descripcion: {4}",
+                                       count,
+                                       pr.Producto.Nombre,
+                                       pr.Producto.Precio,
+                                       pr.Producto.Marca,
+                                       pr.Producto.Descripcion
+                                   );
+                                   Console.WriteLine("");
+                                   count++;
+                              }
+                         }
+                         else
+                         {
+                              Console.WriteLine("el carrito está vacio... ");
+                         }
                     }
+
+               }
+               else
+               {
                     Console.WriteLine("El carrito está vacio!");
                }
-               Console.WriteLine("El carrito está vacio!");
           }
 
-          public static void MostrarVentasPorDia(IVentasService service)
+          public static void MostrarVentasPorDia(IVentasService ventasService)
           {
                Console.Clear();
-               var ventas = service.GetVentasByDay();
+               var ventas = ventasService.GetVentasByDay();
                int count = 1;
                foreach (var venta in ventas)
                {
@@ -251,12 +300,12 @@ namespace Presentation
           }
 
           public static void MostrarVentasPorProducto(
-              IVentasService service,
-              IProductService service2
+              IVentasService ventasService,
+              IProductService productService
           )
           {
                Console.Clear();
-               var products = service2.ShowProducts();
+               var products = productService.ShowProducts();
                foreach (var pr in products)
                {
                     Console.WriteLine(
@@ -272,7 +321,7 @@ namespace Presentation
                string codigo = InputValidations.StringInput(
                    "ingrese Codigo de producto para ver las ventas relacionadas : "
                );
-               var ventas = service.GetVentasByProduct(codigo);
+               var ventas = ventasService.GetVentasByProduct(codigo);
                if (ventas.Count > 0)
                {
                     int count = 1;

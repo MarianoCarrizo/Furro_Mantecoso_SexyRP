@@ -10,8 +10,6 @@ namespace Application.Services.Interfaces
 
         Carrito CreateCarrito(Carrito carrito);
 
-        void MostrarCarrito(Guid cliente);
-
         CarritoProducto DeleteCarritoProducto(CarritoProducto carrito);
 
         CarritoProducto GetCarritoProductoById(Guid id, int productoId);
