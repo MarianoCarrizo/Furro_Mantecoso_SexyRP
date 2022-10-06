@@ -1,118 +1,11 @@
 ﻿using Application.Services.Interfaces;
 using Application.Utilities.Validations;
 using Domain.Entities;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Presentation
 {
-     public class Menu
+     public class DeadMenu
      {
-          private readonly IServiceProvider _serviceProvider;
-
-          public Menu(IServiceProvider serviceProvider)
-          {
-               _serviceProvider = serviceProvider;
-          }
-
-          public void StartMenu()
-          {
-               Console.Clear();
-               Console.WriteLine("**************************************");
-               Console.WriteLine("*        SUPERMERCADOS NOCHE         *");
-               Console.WriteLine("*                                    *");
-               Console.WriteLine("**************************************");
-               Console.WriteLine("*                                    *");
-               Console.WriteLine("**************************************");
-               Console.WriteLine("");
-               Console.WriteLine("");
-               Console.WriteLine("Selecciones una opción.");
-               Console.WriteLine("");
-               Console.WriteLine(" 1 ) -  Registrar Clientes");
-               Console.WriteLine(" 2 ) - Registrar Venta");
-               Console.WriteLine(" 3 ) - Reportes de ventas del día");
-               Console.WriteLine(" 4 ) - Reportes de ventas de un producto ");
-               Console.WriteLine(" 5 ) - Observar Carrito              ");
-               Console.WriteLine(" 6 ) - Salir del sistema");
-               int select = InputValidations.IntInput("Ingrese su seleccion: ", 1, 7);
-               while (select != 7)
-               {
-                    switch (select)
-                    {
-                         case 1:
-                              Console.WriteLine();
-                              RegistrarCliente(_serviceProvider.GetRequiredService<IClienteService>());
-                              Console.WriteLine("Presione cualquier tecla para volver al menu. ");
-                              Console.ReadKey();
-                              break;
-                         case 2:
-                              Console.WriteLine();
-                              RegistrarVenta(
-                                  _serviceProvider.GetRequiredService<IClienteService>(),
-                                  _serviceProvider.GetRequiredService<ICarritoService>(),
-                                  _serviceProvider.GetRequiredService<IOrdenService>(),
-                                  _serviceProvider.GetRequiredService<IProductService>()
-                              );
-                              Console.WriteLine("Presione cualquier tecla para volver al menu. ");
-                              Console.ReadKey();
-                              break;
-                         case 3:
-                              Console.WriteLine();
-                              MostrarVentasPorDia(_serviceProvider.GetRequiredService<IVentasService>());
-                              Console.WriteLine("Presione cualquier tecla para volver al menu. ");
-                              Console.ReadKey();
-                              break;
-                         case 4:
-                              Console.WriteLine();
-                              MostrarVentasPorProducto(
-                                  _serviceProvider.GetRequiredService<IVentasService>(),
-                                  _serviceProvider.GetRequiredService<IProductService>()
-                              );
-                              Console.WriteLine("Presione cualquier tecla para volver al menu. ");
-                              Console.ReadKey();
-                              break;
-                         case 5:
-                              Console.WriteLine();
-                              MostrarCarrito(
-                                  _serviceProvider.GetRequiredService<IClienteService>(),
-                                  _serviceProvider.GetRequiredService<ICarritoService>()
-                              );
-                              Console.WriteLine("Presione cualquier tecla para volver al menu. ");
-                              Console.ReadKey();
-                              break;
-                         case 6:
-                              break;
-                         default:
-                              Console.WriteLine("Opcion invalida");
-                              break;
-                    }
-                    if (InputValidations.IsValid(select) == true)
-                    {
-                         select = 7;
-                    }
-                    else
-                    {
-                         Console.Clear();
-                         Console.WriteLine("**************************************");
-                         Console.WriteLine("*        SUPERMERCADOS NOCHE         *");
-                         Console.WriteLine("*                                    *");
-                         Console.WriteLine("**************************************");
-                         Console.WriteLine("*                                    *");
-                         Console.WriteLine("**************************************");
-                         Console.WriteLine("");
-                         Console.WriteLine("");
-                         Console.WriteLine("Selecciones una opción.");
-                         Console.WriteLine("");
-                         Console.WriteLine(" 1 ) -  Registrar Clientes");
-                         Console.WriteLine(" 2 ) - Registrar Venta");
-                         Console.WriteLine(" 3 ) - Reportes de ventas del día");
-                         Console.WriteLine(" 4 ) - Reportes de ventas de un producto ");
-                         Console.WriteLine(" 5 ) - Observar Carrito              ");
-                         Console.WriteLine(" 6 ) - Salir del sistema");
-                         select = InputValidations.IntInput("Ingresar : ", 1, 7);
-                    }
-               }
-          }
-
           private static void RegistrarCliente(IClienteService service)
           {
                Console.Clear();
