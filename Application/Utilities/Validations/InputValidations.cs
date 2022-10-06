@@ -17,10 +17,10 @@ namespace Application.Utilities.Validations
         {
             Console.Write(text);
             string textOutput = Console.ReadLine();
-           if (textOutput.Length == 0)
-           {
+            if (textOutput.Length == 0)
+            {
                 return "error,No puede ingresarse un DNI Vacio.";
-           }
+            }
             return textOutput;
         }
         public static string YesOrNoInput(string text)

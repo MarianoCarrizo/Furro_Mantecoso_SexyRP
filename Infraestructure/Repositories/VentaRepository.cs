@@ -76,7 +76,7 @@ namespace Infrastructure.Repositories
                         ventas.Add(sell);
                     }
                 }
-               
+
 
                 productos = new List<Producto>();
             }

@@ -32,6 +32,7 @@ namespace Presentation
 
             collection.AddTransient<IClienteRepository, ClienteRepository>();
             collection.AddTransient<IOrdenRepository, OrdenRepository>();
+            collection.AddTransient<IOrdenService, OrdenService>();
             collection.AddTransient<ICarritoRepository, CarritoRepository>();
             collection.AddTransient<ICarritoService, CarritoService>();
             collection.AddTransient<IProductService, ProductService>();

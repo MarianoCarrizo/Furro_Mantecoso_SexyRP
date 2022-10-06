@@ -2,14 +2,14 @@
 
 namespace Application.Services.Interfaces
 {
-    public interface IClienteService
-    {
-        Cliente GetClienteById(int id);
+     public interface IClienteService
+     {
+          Cliente GetClienteById(int id);
 
-        Cliente GetClienteByDNI(string DNI);
+          Cliente GetClienteByDNI(string DNI);
 
-        Cliente CreateClient(string DNI, string nombre, string apellido, string direccion, string telefono);
+          Cliente CreateClient(string DNI, string nombre, string apellido, string direccion, string telefono);
 
-        List<Cliente> ShowClientes();
-    }
+          List<Cliente> ShowClientes();
+     }
 }

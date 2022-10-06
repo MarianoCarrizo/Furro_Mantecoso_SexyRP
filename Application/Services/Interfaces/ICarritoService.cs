@@ -6,6 +6,18 @@ namespace Application.Services.Interfaces
     {
         Carrito GetCarritoByClientId(int id);
 
+        Carrito GetCarritoById(Guid id);
+
+        Carrito CreateCarrito(Carrito carrito);
+
+        void MostrarCarrito(Guid cliente);
+
+        CarritoProducto DeleteCarritoProducto(CarritoProducto carrito);
+
+        CarritoProducto GetCarritoProductoById(Guid id, int productoId);
+
+        CarritoProducto CreateCarritoProducto(CarritoProducto carritoProducto);
+
         Carrito UpdateCarrito(Carrito carrito);
 
 
