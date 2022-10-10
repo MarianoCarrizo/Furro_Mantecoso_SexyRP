@@ -14,9 +14,10 @@ namespace Application.Services
           private readonly IMapper _mapper;
 
 
-          public ClienteService(IClienteRepository repository)
+          public ClienteService(IClienteRepository repository, IMapper mapper)
         {
             _repository = repository;
+               _mapper = mapper;   
         }
 
         public async Task<ClienteDto> GetClienteById(int id)

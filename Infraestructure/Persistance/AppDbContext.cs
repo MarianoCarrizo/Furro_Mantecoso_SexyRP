@@ -91,18 +91,27 @@ namespace Infraestructure.Persistence
                     .HasForeignKey<Orden>(d => d.CarritoId);
             });
 
-            modelBuilder.Entity<Producto>(entity =>
-            {
-                entity.ToTable("Producto");
+               modelBuilder.Entity<Producto>(entity =>
+               {
+                    entity.ToTable("Producto");
 
-                entity.Property(e => e.ProductoId);
+                    entity.Property(e => e.ProductoId);
 
-                entity.Property(e => e.Codigo).HasMaxLength(25);
+                    entity.Property(e => e.Codigo).HasMaxLength(25);
 
-                entity.Property(e => e.Marca).HasMaxLength(25);
+                    entity.Property(e => e.Marca).HasMaxLength(25);
 
-                entity.Property(e => e.Precio).HasColumnType("decimal(15, 2)");
-            });
+                    entity.Property(e => e.Precio).HasColumnType("decimal(15, 2)");
+               });
+
+               modelBuilder.Entity<Cliente>().HasData(
+                    new Cliente { ClienteId= 1,
+                         Nombre = "mateo",
+                    Apellido = "carrizo",
+                    Dni = "696969696",
+                    Direccion = "calle siempreviva 599",
+                     Telefono = "1513616310"
+                    });
             modelBuilder.Entity<Producto>().HasData(
                   new Producto
                   {
