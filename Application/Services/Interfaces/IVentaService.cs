@@ -2,7 +2,7 @@
 
 namespace Application.Services.Interfaces
 {
-    public interface IVentasService
+    public interface IVentaService
     {
         public List<Venta> GetVentasByProduct(string codigo);
 

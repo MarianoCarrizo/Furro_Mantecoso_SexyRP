@@ -16,12 +16,13 @@ namespace Application.Services
             _repository = repository;
         }
 
-        public Cliente GetClienteById(int id)
+        public async Task<Cliente> GetClienteById(int id)
         {
-            return _repository.GetClienteById(id);
+            var cliente = await _repository.GetClienteById(id);
+               return cliente;
         }
 
-        public Cliente CreateClient(string dni, string nombre, string apellido, string direccion, string telefono)
+        public Task<Cliente> CreateClient(string dni, string nombre, string apellido, string direccion, string telefono)
         {
 
             try
@@ -42,8 +43,8 @@ namespace Application.Services
                     Telefono = telefono,
                 };
 
-                _repository.AddCliente(client);
-                return client;
+               var clientcreado =  _repository.AddCliente(client);
+                    return clientcreado;
             }
             catch (Exception)
             {
@@ -53,18 +54,19 @@ namespace Application.Services
         }
 
 
-        public List<Cliente> ShowClientes()
+        public async Task<List<Cliente>> ShowClientes()
         {
 
 
-            List<Cliente> list = _repository.GetAllClientes();
-            return list;
+            var  list = await _repository.GetAllClientes();
+               return list;
 
         }
 
-        public Cliente GetClienteByDNI(string DNI)
+        public async Task<Cliente> GetClienteByDNI(string DNI)
         {
-            return _repository.GetClienteByDNI(DNI);
+               var cliente = await _repository.GetClienteByDNI(DNI);
+               return cliente;
         }
     }
 }

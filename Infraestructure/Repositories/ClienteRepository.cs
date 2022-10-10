@@ -13,21 +13,21 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public Cliente AddCliente(Cliente cliente)
+        public async Task<Cliente> AddCliente(Cliente cliente)
         {
             _context.Add(cliente);
-            _context.SaveChanges();
+               await _context.SaveChangesAsync();
 
-            return cliente;
+               return cliente;
         }
 
-        public Cliente GetClienteById(int id)
+        public async Task<Cliente> GetClienteById(int id)
         {
 
             return _context.Clientes.Find(id);
         }
 
-        public List<Cliente> GetClientes(string? nombre = null, string? apellido = null, string? dni = null)
+        public async Task<List<Cliente>> GetClientes(string? nombre = null, string? apellido = null, string? dni = null)
         {
             return _context.Clientes.
                                     Where(Client => (string.IsNullOrEmpty(nombre) || Client.Nombre == nombre) &&
@@ -35,9 +35,10 @@ namespace Infrastructure.Repositories
                                     (string.IsNullOrEmpty(dni) || Client.Dni == dni)).ToList();
         }
 
-        public List<Cliente> GetAllClientes()
+        public Task<List<Cliente>> GetAllClientes()
         {
-            return _context.Clientes.ToList();
+           var clientes =_context.Clientes.ToList();
+               return Task.FromResult(clientes);
         }
 
         public void UpdateCliente(Cliente cliente)
@@ -46,7 +47,7 @@ namespace Infrastructure.Repositories
             _context.SaveChanges();
         }
 
-        public Cliente GetClienteByDNI(string DNI)
+        public async Task<Cliente> GetClienteByDNI(string DNI)
         {
             return _context.Clientes.FirstOrDefault(client => client.Dni == DNI);
 

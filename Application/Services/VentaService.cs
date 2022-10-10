@@ -4,12 +4,12 @@ using Domain.Models;
 
 namespace Application.Services
 {
-    public class VentasService : IVentasService
+    public class VentaService : IVentaService
     {
         private readonly IVentaRepository _VentaRepository;
 
 
-        public VentasService(
+        public VentaService(
             IVentaRepository repoV
         )
         {
