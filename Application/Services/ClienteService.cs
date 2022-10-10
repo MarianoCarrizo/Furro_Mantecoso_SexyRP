@@ -1,7 +1,9 @@
 ﻿using Application.DataAccess;
 
 using Application.Services.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Models;
 
 
 namespace Application.Services
@@ -9,20 +11,21 @@ namespace Application.Services
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepository _repository;
+          private readonly IMapper _mapper;
 
 
-        public ClienteService(IClienteRepository repository)
+          public ClienteService(IClienteRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<Cliente> GetClienteById(int id)
+        public async Task<ClienteDto> GetClienteById(int id)
         {
             var cliente = await _repository.GetClienteById(id);
-               return cliente;
-        }
+               return _mapper.Map<ClienteDto>(cliente);
+          }
 
-        public Task<Cliente> CreateClient(string dni, string nombre, string apellido, string direccion, string telefono)
+        public async Task<ClienteDto> CreateClient(string dni, string nombre, string apellido, string direccion, string telefono)
         {
 
             try
@@ -43,9 +46,9 @@ namespace Application.Services
                     Telefono = telefono,
                 };
 
-               var clientcreado =  _repository.AddCliente(client);
-                    return clientcreado;
-            }
+               var clientcreado =  await _repository.AddCliente(client);
+                    return _mapper.Map<ClienteDto>(clientcreado);
+               }
             catch (Exception)
             {
                 return null;
@@ -54,19 +57,19 @@ namespace Application.Services
         }
 
 
-        public async Task<List<Cliente>> ShowClientes()
+        public async Task<List<ClienteDto>> ShowClientes()
         {
 
 
             var  list = await _repository.GetAllClientes();
-               return list;
+               return _mapper.Map<List<ClienteDto>>(list);
 
-        }
+          }
 
-        public async Task<Cliente> GetClienteByDNI(string DNI)
+        public async Task<ClienteDto> GetClienteByDNI(string DNI)
         {
                var cliente = await _repository.GetClienteByDNI(DNI);
-               return cliente;
-        }
+               return _mapper.Map<ClienteDto>(cliente);
+          }
     }
 }
