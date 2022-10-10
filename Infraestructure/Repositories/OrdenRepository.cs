@@ -1,32 +1,32 @@
 ﻿using Application.DataAccess;
 using Domain.Entities;
-using Infraestructure.Persistence;
+using Infraestructure.Persistance;
 
-namespace Infrastructure.Repositories
+namespace Infraestructure.Repositories
 {
-    public class OrdenRepository : IOrdenRepository
-    {
-        private readonly AppDbContext _context;
+     public class OrdenRepository : IOrdenRepository
+     {
+          private readonly AppDbContext _context;
 
-        public OrdenRepository(AppDbContext appDbContext)
-        {
-            _context = appDbContext;
-        }
+          public OrdenRepository(AppDbContext appDbContext)
+          {
+               _context = appDbContext;
+          }
 
-        public Orden CreateOrden(Orden orden)
-        {
-            _context.Ordenes.Add(orden);
-            _context.SaveChanges();
+          public Orden CreateOrden(Orden orden)
+          {
+               _context.Ordenes.Add(orden);
+               _context.SaveChanges();
 
-            return orden;
-        }
+               return orden;
+          }
 
 
 
-        public List<Orden> GetOrdenesByDay()
-        {
-            return _context.Ordenes.Where(o => o.Fecha.Date == DateTime.Now.Date).ToList();
-        }
+          public List<Orden> GetOrdenesByDay()
+          {
+               return _context.Ordenes.Where(o => o.Fecha.Date == DateTime.Now.Date).ToList();
+          }
 
-    }
+     }
 }
