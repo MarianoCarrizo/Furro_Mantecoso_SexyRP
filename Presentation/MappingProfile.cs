@@ -9,8 +9,9 @@ namespace TP.Application.Utilities
         public MappingProfile()
         {
                CreateMap<Cliente, ClienteDto>();
-               CreateMap<Producto, ProductoDto>();
+               CreateMap<Producto, ProductoDto>().ReverseMap();
                CreateMap<Venta, VentaDtoForDisplay>();
+        
 
           }
     }

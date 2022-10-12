@@ -12,6 +12,7 @@ namespace Application.DataAccess
         public Task<Cliente>AddCliente(Cliente cliente);
         public Task<Cliente> GetClienteByDNI(string DNI);
 
-        public Task<List<Cliente>> GetAllClientes();
+
+          public Task<List<Cliente>> GetAllClientes();
     }
 }

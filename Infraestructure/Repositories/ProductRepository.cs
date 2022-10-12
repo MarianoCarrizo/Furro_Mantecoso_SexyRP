@@ -1,6 +1,8 @@
 ﻿using Application.DataAccess;
 using Domain.Entities;
+using Domain.Models;
 using Infraestructure.Persistance;
+using System.Net;
 
 namespace Infraestructure.Repositories
 {
@@ -12,6 +14,22 @@ namespace Infraestructure.Repositories
           {
                _context = appDbContext;
           }
+
+          public Task<List<Producto>> GetProductos(string? name = null, bool? sort = null)
+          {
+               if (sort == false)
+               {
+                    var Productos = _context.Productos.OrderByDescending(Producto => Producto.Precio).Where(Product => string.IsNullOrEmpty(name) || Product.Nombre.Contains(name) == true).ToList();
+                    return Task.FromResult(Productos);
+               }
+               else
+               {
+                 var Productos = _context.Productos.OrderBy(Producto => Producto.Precio).Where(Product => string.IsNullOrEmpty(name) || Product.Nombre.Contains(name) == true).ToList();
+                    return Task.FromResult(Productos);
+               }
+                    
+          }
+     
 
           public Producto GetProductById(int id)
           {

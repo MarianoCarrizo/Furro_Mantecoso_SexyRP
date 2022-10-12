@@ -26,25 +26,25 @@ namespace Application.Services
                return _mapper.Map<ClienteDto>(cliente);
           }
 
-        public async Task<ClienteDto> CreateClient(string dni, string nombre, string apellido, string direccion, string telefono)
+        public async Task<ClienteDto> CreateClient(ClienteDto cliente)
         {
 
             try
 
             {
-                var ClientExists = _repository.GetClienteByDNI(dni);
-                if (ClientExists != null)
+                var ClientExists = _repository.GetClienteByDNI(cliente.Dni);
+                if (ClientExists.Result != null)
                 {
-                    return null;
+                         return null;
                 }
 
                 var client = new Cliente()
                 {
-                    Dni = dni,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Direccion = direccion,
-                    Telefono = telefono,
+                    Dni = cliente.Dni,
+                    Nombre = cliente.name,
+                    Apellido = cliente.lastname,
+                    Direccion = cliente.address,
+                    Telefono = cliente.phoneNumber,
                 };
 
                var clientcreado =  await _repository.AddCliente(client);

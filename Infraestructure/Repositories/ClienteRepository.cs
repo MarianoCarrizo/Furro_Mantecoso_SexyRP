@@ -27,13 +27,7 @@ namespace Infraestructure.Repositories
                return _context.Clientes.Find(id);
           }
 
-          public async Task<List<Cliente>> GetClientes(string? nombre = null, string? apellido = null, string? dni = null)
-          {
-               return _context.Clientes.
-                                       Where(Client => (string.IsNullOrEmpty(nombre) || Client.Nombre == nombre) &&
-                                       (string.IsNullOrEmpty(apellido) || Client.Apellido == apellido) &&
-                                       (string.IsNullOrEmpty(dni) || Client.Dni == dni)).ToList();
-          }
+     
 
           public Task<List<Cliente>> GetAllClientes()
           {
@@ -53,6 +47,6 @@ namespace Infraestructure.Repositories
 
           }
 
-
+        
      }
 }

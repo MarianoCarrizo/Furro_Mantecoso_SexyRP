@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Models;
 
 namespace Application.DataAccess
 {
@@ -6,6 +7,8 @@ namespace Application.DataAccess
     {
 
         public List<Producto> GetProductos();
+
+          public Task<List<Producto>> GetProductos(string? name = null, bool? sort = null);
         public Producto GetProductById(int id);
     }
 }

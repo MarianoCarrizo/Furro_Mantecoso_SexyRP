@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Models;
 
 namespace Application.Services.Interfaces
 {
@@ -6,7 +7,7 @@ namespace Application.Services.Interfaces
     {
         Producto FindProductById(int id);
 
-
-        List<Producto> ShowProducts();
+          Task<List<ProductoDto>> GetProducts(string? name = null, bool? sort = null);
+          List<Producto> ShowProducts();
     }
 }

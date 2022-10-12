@@ -39,5 +39,35 @@ namespace Presentation.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
-    }
+
+
+          [HttpPost]
+          [ProducesResponseType(typeof(ClienteDto), StatusCodes.Status201Created)]
+          [ProducesResponseType(typeof(ErrorDto),StatusCodes.Status409Conflict)]
+          [ProducesResponseType(typeof(ErrorDto),StatusCodes.Status400BadRequest)]
+          public async Task<IActionResult> AddCliente([FromBody]ClienteDto client)
+          {
+               try
+               {
+                    var cliente = await _clienteService.CreateClient(client);
+
+                    if (cliente == null)
+                    {
+                         var errorDto = new ErrorDto
+                         {
+                              message = "Ha ocurrido un error. El DNI ingresado corresponde a un usuario ya existente en el sistema.",
+                              statuscode = "409"
+                         };
+                         return Conflict(errorDto);
+                    }
+                    return Created("Se ha creado nuevo Cliente", client);
+                   
+               }
+               catch (Exception)
+               {
+
+                    return BadRequest("se ha ingresado los datos en un formato incorrecto");
+               }
+          }
+     }
 }

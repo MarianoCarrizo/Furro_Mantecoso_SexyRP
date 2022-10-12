@@ -9,7 +9,7 @@ namespace Application.Services.Interfaces
 
           Task<ClienteDto> GetClienteByDNI(string DNI);
 
-          Task<ClienteDto> CreateClient(string DNI, string nombre, string apellido, string direccion, string telefono);
+          Task<ClienteDto> CreateClient(ClienteDto cliente);
 
           Task<List<ClienteDto>> ShowClientes();
      }

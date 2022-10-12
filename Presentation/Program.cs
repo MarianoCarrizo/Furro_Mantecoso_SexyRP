@@ -28,7 +28,10 @@ namespace Presentation
                builder.Services.AddSwaggerGen();
                builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
                builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
-               builder.Services.AddTransient<IOrdenRepository, OrdenRepository>();
+               builder.Services.AddTransient<IVentaRepository, VentaRepository>();
+               builder.Services.AddTransient<IProductRepository, ProductRepository>();
+               builder.Services.AddTransient<IProductService, ProductService>();
+               builder.Services.AddTransient < IOrdenRepository, OrdenRepository>();
                builder.Services.AddTransient<IVentaRepository, VentaRepository>();
                builder.Services.AddTransient<IClienteService, ClienteService>();
                builder.Services.AddTransient<IOrdenService, OrdenService>();
