@@ -31,9 +31,9 @@ namespace Infraestructure.Repositories
           }
      
 
-          public Producto GetProductById(int id)
+          public Task<Producto> GetProductById(int id)
           {
-               return _context.Productos.FirstOrDefault(product => product.ProductoId == id);
+               return Task.FromResult(_context.Productos.FirstOrDefault(product => product.ProductoId == id));
           }
 
           public List<Producto> GetProductos()

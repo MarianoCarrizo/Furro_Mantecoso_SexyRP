@@ -5,25 +5,41 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Models;
 using System.Net;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Services
 {
-    public class ProductService : IProductService
-    {
-        private readonly IProductRepository _repository;
+     public class ProductService : IProductService
+     {
+          private readonly IProductRepository _repository;
           private readonly IMapper _mapper;
 
 
-        public ProductService(IProductRepository repository,IMapper mapper)
-        {
-            _repository = repository;
+          public ProductService(IProductRepository repository, IMapper mapper)
+          {
+               _repository = repository;
                _mapper = mapper;
-        }
+          }
 
-        public Producto FindProductById(int id)
-        {
-            return _repository.GetProductById(id);
-        }
+          public Task<ProductoFindDto> FindProductById(int id)
+          {
+
+               var product = _repository.GetProductById(id).Result;
+               var producto = new ProductoFindDto()
+               {
+                    Nombre = product.Nombre,
+                    Descripcion = product.Descripcion,
+                    Marca = product.Marca,
+                    Codigo = product.Codigo,
+                    Image = product.Image,
+                    Precio = product.Precio
+               };
+
+               return Task.FromResult(producto);
+
+          }
+
+
 
           public Task<List<ProductoDto>> GetProducts(string? name = null, bool? sort = null)
           {

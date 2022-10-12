@@ -9,6 +9,6 @@ namespace Application.DataAccess
         public List<Producto> GetProductos();
 
           public Task<List<Producto>> GetProductos(string? name = null, bool? sort = null);
-        public Producto GetProductById(int id);
+        public Task<Producto> GetProductById(int id);
     }
 }
