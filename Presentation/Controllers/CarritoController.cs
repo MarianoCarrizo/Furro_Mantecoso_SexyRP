@@ -193,7 +193,7 @@ namespace Presentation.Controllers
 
           }
 
-          [HttpDelete]
+          [HttpDelete("{ClientId}/{ProductoId}")]
           [ProducesResponseType(StatusCodes.Status204NoContent)]
           [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
           [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
