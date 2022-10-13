@@ -28,7 +28,7 @@ namespace Application.Services
             return _CarritoRepository.UpdateCarrito(carrito);
         }
 
-        public CarritoProducto DeleteCarritoProducto(CarritoProducto carrito)
+          public async Task<CarritoProducto> DeleteCarritoProducto(CarritoProducto carrito)
         {
             return _CarritoRepository.DeleteCarritoProducto(carrito);
         }

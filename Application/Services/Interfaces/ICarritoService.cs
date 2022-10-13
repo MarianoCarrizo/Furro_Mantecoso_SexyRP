@@ -10,7 +10,7 @@ namespace Application.Services.Interfaces
 
        Task<Carrito> CreateCarrito(Carrito carrito);
 
-        CarritoProducto DeleteCarritoProducto(CarritoProducto carrito);
+        Task<CarritoProducto> DeleteCarritoProducto(CarritoProducto carrito);
 
           Task<CarritoProducto> UpdateCarritoProducto(CarritoProducto carrito);
 
