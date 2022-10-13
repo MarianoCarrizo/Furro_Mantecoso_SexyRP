@@ -13,22 +13,61 @@ namespace Presentation.Controllers
      public class CarritoController : ControllerBase
      {
           private readonly ICarritoService _carritoService;
+          private readonly IProductService _productService;
+          private readonly IClienteService _clienteService;
 
-          public CarritoController(ICarritoService carritoService)
+          public CarritoController(ICarritoService carritoService,IProductService productoService, IClienteService clienteService)
           {
                _carritoService = carritoService;
+               _productService = productoService;
+               _clienteService = clienteService;
           }
 
           
           [HttpPut]
-          [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status201Created)]
+          [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status204NoContent)]
           [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
           [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-          public async Task<IActionResult> AddCarritoProducto([FromBody] CompraCarritoDto agregadoProducto)
+          public async Task<IActionResult> AddProducto([FromBody] CompraCarritoDto agregadoProducto)
           {
                try
                {
-                   
+                    var client = _clienteService.GetClienteById(agregadoProducto.ClienteId);
+                    if (client == null)
+                    {
+                         var error = new ErrorDto
+                         {
+                              message = "El Id del cliente ingresado no existe.",
+                              statuscode = "409"
+
+                         };
+                         return Conflict(error);
+
+                    }
+                    var producto = _productService.FindProductById(agregadoProducto.ProductoId);
+                    if (producto == null)
+                    {
+                         var error = new ErrorDto
+                         {
+                              message = "El Id del producto ingresado no existe.",
+                              statuscode = "409"
+
+                         };
+                         return Conflict(error);
+
+                    }
+                    if (agregadoProducto.cantidad < 1)
+                    {
+                         var error = new ErrorDto
+                         {
+                              message = "No se puede ingresar cantidad negativa o menos de 1",
+                              statuscode = "409"
+
+                         };
+                         return Conflict(error);
+
+                    }
+
                     var carrito = _carritoService.GetCarritoByClientId(agregadoProducto.ClienteId);
                     if (carrito == null)
                     {
@@ -57,12 +96,7 @@ namespace Presentation.Controllers
                          };
                          carrito.CarritoProductos.Add(producto);
                           await _carritoService.UpdateCarrito(carrito);
-                         var responseDto = new ResponseDto
-                         {
-                              message = "Se ha insertado el producto Correctamente.",
-                              statuscode = "201",
-                         };
-                         return new JsonResult(responseDto) { StatusCode = 201 };
+                         return NoContent();
                     }
                }
                catch (Exception)
