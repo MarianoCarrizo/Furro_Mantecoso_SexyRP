@@ -6,5 +6,6 @@ namespace Application.DataAccess
      {
           public List<Orden> GetOrdenesByDay();
           public Orden CreateOrden(Orden orden);
+          public List<Orden> GetOrder(DateTime? from = null, DateTime? to = null);
      }
 }

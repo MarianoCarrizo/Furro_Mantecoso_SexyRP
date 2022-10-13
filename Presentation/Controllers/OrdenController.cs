@@ -1,5 +1,6 @@
 ﻿using Application.Services;
 using Application.Services.Interfaces;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Models;
 using Microsoft.AspNetCore.Http;
@@ -15,12 +16,14 @@ namespace Presentation.Controllers
           private readonly IOrdenService _ordenService;
           private readonly ICarritoService _carritoService;
           private readonly IClienteService _clienteService;
+          private readonly IMapper _mapper;
 
-          public OrdenController(ICarritoService carritoService, IOrdenService ordenService, IClienteService clienteService)
+          public OrdenController(ICarritoService carritoService, IOrdenService ordenService, IClienteService clienteService, IMapper mapper)
           {
                _carritoService = carritoService;
                _ordenService = ordenService;
                _clienteService = clienteService;
+               _mapper = mapper;
           }
 
 
@@ -95,8 +98,23 @@ namespace Presentation.Controllers
           {
                try
                {
-                    var ordenes = await _ordenService.GetOrder(from, to);
-                   
+                    var order = await _ordenService.GetOrder(from, to);
+
+
+                    List<OrdenDto> ordenes = new List<OrdenDto>();
+                    foreach (var item in order)
+                    {
+                         List<ProductoDto> productos = new List<ProductoDto>();
+                         var carrito = _carritoService.GetCarritoById(item.CarritoId);
+                         foreach (var product in carrito.CarritoProductos)
+                         {
+                              productos.Add(_mapper.Map<ProductoDto>(product.Producto));
+                         }
+                         var ordenMapeada = _mapper.Map<OrdenDto>(item);
+                         ordenMapeada.Productos = productos;
+                         ordenes.Add(ordenMapeada);
+                    }
+
                     return Ok(ordenes);
 
                }
