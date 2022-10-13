@@ -45,8 +45,8 @@ namespace Presentation.Controllers
                          return NotFound(error);
 
                     }
-                    var product = _productService.FindProductById(agregadoProducto.ProductoId);
-                    if (product == null)
+                    var product = _productService.FindRawProductById(agregadoProducto.ProductoId);
+                    if (product.Result == null)
                     {
                          var error = new ErrorDto
                          {
@@ -130,8 +130,8 @@ namespace Presentation.Controllers
                          return NotFound(error);
 
                     }
-                    var product = _productService.FindProductById(agregadoProducto.ProductoId);
-                    if (product == null)
+                    var product = _productService.FindRawProductById(agregadoProducto.ProductoId);
+                    if (product.Result == null)
                     {
                          var error = new ErrorDto
                          {

@@ -78,6 +78,8 @@ namespace Presentation.Controllers
 
                          };
                          _ordenService.CreateOrden(Orden);
+                         carrito.Estado = false;
+                        await _carritoService.UpdateCarrito(carrito);
                          return Ok("Se ha creado una Orden");
                     }
                }
@@ -105,7 +107,7 @@ namespace Presentation.Controllers
                     foreach (var item in order)
                     {
                          List<ProductoDto> productos = new List<ProductoDto>();
-                         var carrito = _carritoService.GetCarritoById(item.CarritoId);
+                         var carrito = _carritoService.GetRawCarritoById(item.CarritoId);
                          foreach (var product in carrito.CarritoProductos)
                          {
                               productos.Add(_mapper.Map<ProductoDto>(product.Producto));

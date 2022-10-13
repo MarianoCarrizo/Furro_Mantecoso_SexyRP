@@ -37,6 +37,14 @@ namespace Application.Services
 
           }
 
+          public async Task<Producto> FindRawProductById(int id)
+          {
+
+               var product = _repository.GetProductById(id).Result;
+               return product;
+
+          }
+
 
 
           public async Task<List<ProductoDto>> GetProducts(string? name = null, bool? sort = null)
@@ -55,10 +63,6 @@ namespace Application.Services
                return lista;
           }
 
-          public List<Producto> ShowProducts()
-        {
-            List<Producto> list = _repository.GetProductos();
-            return list;
-        }
+   
     }
 }

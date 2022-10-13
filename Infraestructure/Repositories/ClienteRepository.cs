@@ -26,21 +26,6 @@ namespace Infraestructure.Repositories
 
                return _context.Clientes.Find(id);
           }
-
-     
-
-          public Task<List<Cliente>> GetAllClientes()
-          {
-               var clientes = _context.Clientes.ToList();
-               return Task.FromResult(clientes);
-          }
-
-          public void UpdateCliente(Cliente cliente)
-          {
-               _context.Clientes.Update(cliente);
-               _context.SaveChanges();
-          }
-
           public async Task<Cliente> GetClienteByDNI(string DNI)
           {
                return _context.Clientes.FirstOrDefault(client => client.Dni == DNI);

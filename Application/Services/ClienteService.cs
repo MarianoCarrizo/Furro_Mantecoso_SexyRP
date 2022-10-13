@@ -58,19 +58,5 @@ namespace Application.Services
         }
 
 
-        public async Task<List<ClienteDto>> ShowClientes()
-        {
-
-
-            var  list = await _repository.GetAllClientes();
-               return _mapper.Map<List<ClienteDto>>(list);
-
-          }
-
-        public async Task<ClienteDto> GetClienteByDNI(string DNI)
-        {
-               var cliente = await _repository.GetClienteByDNI(DNI);
-               return _mapper.Map<ClienteDto>(cliente);
-          }
     }
 }
