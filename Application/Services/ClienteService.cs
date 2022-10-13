@@ -11,20 +11,20 @@ namespace Application.Services
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepository _repository;
-          private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
 
 
-          public ClienteService(IClienteRepository repository, IMapper mapper)
+        public ClienteService(IClienteRepository repository, IMapper mapper)
         {
             _repository = repository;
-               _mapper = mapper;   
+            _mapper = mapper;
         }
 
         public async Task<ClienteDto> GetClienteById(int id)
         {
             var cliente = await _repository.GetClienteById(id);
-               return _mapper.Map<ClienteDto>(cliente);
-          }
+            return _mapper.Map<ClienteDto>(cliente);
+        }
 
         public async Task<ClienteDto> CreateClient(ClienteDto cliente)
         {
@@ -35,7 +35,7 @@ namespace Application.Services
                 var ClientExists = _repository.GetClienteByDNI(cliente.Dni);
                 if (ClientExists.Result != null)
                 {
-                         return null;
+                    return null;
                 }
 
                 var client = new Cliente()
@@ -47,9 +47,9 @@ namespace Application.Services
                     Telefono = cliente.phoneNumber,
                 };
 
-               var clientcreado =  await _repository.AddCliente(client);
-                    return _mapper.Map<ClienteDto>(clientcreado);
-               }
+                var clientcreado = await _repository.AddCliente(client);
+                return _mapper.Map<ClienteDto>(clientcreado);
+            }
             catch (Exception)
             {
                 return null;

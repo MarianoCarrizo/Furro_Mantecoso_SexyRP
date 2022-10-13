@@ -1,266 +1,263 @@
-﻿using Application.Services;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using Domain.Entities;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace Presentation.Controllers
 {
-     [Route("api/carrito")]
-     [ApiController]
-     public class CarritoController : ControllerBase
-     {
-          private readonly ICarritoService _carritoService;
-          private readonly IProductService _productService;
-          private readonly IClienteService _clienteService;
+    [Route("api/carrito")]
+    [ApiController]
+    public class CarritoController : ControllerBase
+    {
+        private readonly ICarritoService _carritoService;
+        private readonly IProductService _productService;
+        private readonly IClienteService _clienteService;
 
-          public CarritoController(ICarritoService carritoService,IProductService productoService, IClienteService clienteService)
-          {
-               _carritoService = carritoService;
-               _productService = productoService;
-               _clienteService = clienteService;
-          }
+        public CarritoController(ICarritoService carritoService, IProductService productoService, IClienteService clienteService)
+        {
+            _carritoService = carritoService;
+            _productService = productoService;
+            _clienteService = clienteService;
+        }
 
-          
-          [HttpPut]
-          [ProducesResponseType(StatusCodes.Status204NoContent)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-          public async Task<IActionResult> AddProducto([FromBody] CompraCarritoDto agregadoProducto)
-          {
-               try
-               {
-                    var client = _clienteService.GetClienteById(agregadoProducto.ClienteId);
-                    if (client == null)
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddProducto([FromBody] CompraCarritoDto agregadoProducto)
+        {
+            try
+            {
+                var client = _clienteService.GetClienteById(agregadoProducto.ClienteId);
+                if (client == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El Id del cliente ingresado no existe.",
-                              statuscode = "404"
+                        message = "El Id del cliente ingresado no existe.",
+                        statuscode = "404"
 
-                         };
-                         return NotFound(error);
+                    };
+                    return NotFound(error);
 
-                    }
-                    var product = _productService.FindRawProductById(agregadoProducto.ProductoId);
-                    if (product.Result == null)
+                }
+                var product = _productService.FindRawProductById(agregadoProducto.ProductoId);
+                if (product.Result == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El Id del producto ingresado no existe.",
-                              statuscode = "404"
+                        message = "El Id del producto ingresado no existe.",
+                        statuscode = "404"
 
-                         };
-                         return NotFound(error);
+                    };
+                    return NotFound(error);
 
-                    }
-                    if (agregadoProducto.cantidad < 1)
+                }
+                if (agregadoProducto.cantidad < 1)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "No se puede ingresar cantidad negativa o menos de 1",
-                              statuscode = "404"
+                        message = "No se puede ingresar cantidad negativa o menos de 1",
+                        statuscode = "404"
 
-                         };
-                         return NotFound(error);
+                    };
+                    return NotFound(error);
 
-                    }
+                }
 
-                    var carrito = _carritoService.GetCarritoByClientId(agregadoProducto.ClienteId);
-                    if (carrito == null)
+                var carrito = _carritoService.GetCarritoByClientId(agregadoProducto.ClienteId);
+                if (carrito == null)
+                {
+                    var carro = new Carrito
                     {
-                         var carro = new Carrito
-                         {
-                              CarritoId = Guid.NewGuid(),
-                              ClienteId = agregadoProducto.ClienteId,
-                              Estado = true,
-                         };
-                         var producto = new CarritoProducto
-                         {
-                              Cantidad = agregadoProducto.cantidad,
-                              ProductoId = agregadoProducto.ProductoId,
-                         };
-                         carro.CarritoProductos.Add(producto);
-                         var carroCreado = await _carritoService.CreateCarrito(carro);
-                         return NoContent();
-
-                    }
-                    else
+                        CarritoId = Guid.NewGuid(),
+                        ClienteId = agregadoProducto.ClienteId,
+                        Estado = true,
+                    };
+                    var producto = new CarritoProducto
                     {
-                         var producto = new CarritoProducto
-                         {
-                              Cantidad = agregadoProducto.cantidad,
-                              ProductoId = agregadoProducto.ProductoId,
-                         };
-                         carrito.CarritoProductos.Add(producto);
-                          await _carritoService.UpdateCarrito(carrito);
-                         return NoContent();
-                    }
-               }
-               catch (Exception)
-               {
+                        Cantidad = agregadoProducto.cantidad,
+                        ProductoId = agregadoProducto.ProductoId,
+                    };
+                    carro.CarritoProductos.Add(producto);
+                    var carroCreado = await _carritoService.CreateCarrito(carro);
+                    return NoContent();
 
-                    return BadRequest("se ha ingresado los datos en un formato incorrecto");
-               }
-
-
-          }
-
-          [HttpPatch]
-          [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status204NoContent)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-          public async Task<IActionResult> ModifyProduct([FromBody] CompraCarritoDto agregadoProducto)
-          {
-               try
-               {
-                    var client = _clienteService.GetClienteById(agregadoProducto.ClienteId);
-                    if (client == null)
+                }
+                else
+                {
+                    var producto = new CarritoProducto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El Id del cliente ingresado no existe.",
-                              statuscode = "404"
+                        Cantidad = agregadoProducto.cantidad,
+                        ProductoId = agregadoProducto.ProductoId,
+                    };
+                    carrito.CarritoProductos.Add(producto);
+                    await _carritoService.UpdateCarrito(carrito);
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
 
-                         };
-                         return NotFound(error);
+                return BadRequest("se ha ingresado los datos en un formato incorrecto");
+            }
 
-                    }
-                    var product = _productService.FindRawProductById(agregadoProducto.ProductoId);
-                    if (product.Result == null)
+
+        }
+
+        [HttpPatch]
+        [ProducesResponseType(typeof(ResponseDto), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ModifyProduct([FromBody] CompraCarritoDto agregadoProducto)
+        {
+            try
+            {
+                var client = _clienteService.GetClienteById(agregadoProducto.ClienteId);
+                if (client == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El Id del producto ingresado no existe.",
-                              statuscode = "404"
+                        message = "El Id del cliente ingresado no existe.",
+                        statuscode = "404"
 
-                         };
-                         return NotFound(error);
+                    };
+                    return NotFound(error);
 
-                    }
-                    if (agregadoProducto.cantidad < 1)
+                }
+                var product = _productService.FindRawProductById(agregadoProducto.ProductoId);
+                if (product.Result == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "No se puede ingresar cantidad negativa o menos de 1",
-                              statuscode = "409"
+                        message = "El Id del producto ingresado no existe.",
+                        statuscode = "404"
 
-                         };
-                         return Conflict(error);
+                    };
+                    return NotFound(error);
 
-                    }
-
-                    var carrito = _carritoService.GetCarritoByClientId(agregadoProducto.ClienteId);
-                    if (carrito == null)
+                }
+                if (agregadoProducto.cantidad < 1)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El carrito esta vacio, porfavor ingrese productos.",
-                              statuscode = "409"
+                        message = "No se puede ingresar cantidad negativa o menos de 1",
+                        statuscode = "409"
 
-                         };
-                         return Conflict(error);
+                    };
+                    return Conflict(error);
 
-                    }
-                    else
+                }
+
+                var carrito = _carritoService.GetCarritoByClientId(agregadoProducto.ClienteId);
+                if (carrito == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var producto = _carritoService.GetCarritoProductoById(carrito.CarritoId, agregadoProducto.ProductoId);
-                         if ( producto == null)
-                         {
-                              var error = new ErrorDto
-                              {
-                                   message = "Ese Producto no esta ingresado en el carrito, ingrese el Id de un producto ya existente dentro del carrito.",
-                                   statuscode = "409"
+                        message = "El carrito esta vacio, porfavor ingrese productos.",
+                        statuscode = "409"
 
-                              };
-                              return Conflict(error);
-                         }
-                         producto.Cantidad = agregadoProducto.cantidad;
-                         await _carritoService.UpdateCarritoProducto(producto);
-                         return NoContent();
-                    }
-               }
-               catch (Exception)
-               {
+                    };
+                    return Conflict(error);
 
-                    return BadRequest("se ha ingresado los datos en un formato incorrecto");
-               }
-
-
-          }
-
-          [HttpDelete("{ClientId}/{ProductoId}")]
-          [ProducesResponseType(StatusCodes.Status204NoContent)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-          public async Task<IActionResult> DeleteProducto(int ClientId,int ProductoId)
-          {
-               try
-               {
-                    var client = _clienteService.GetClienteById(ClientId);
-                    if (client == null)
+                }
+                else
+                {
+                    var producto = _carritoService.GetCarritoProductoById(carrito.CarritoId, agregadoProducto.ProductoId);
+                    if (producto == null)
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El Id del cliente ingresado no existe.",
-                              statuscode = "404"
+                        var error = new ErrorDto
+                        {
+                            message = "Ese Producto no esta ingresado en el carrito, ingrese el Id de un producto ya existente dentro del carrito.",
+                            statuscode = "409"
 
-                         };
-                         return NotFound(error);
-
+                        };
+                        return Conflict(error);
                     }
-                    var product = _productService.FindProductById(ProductoId);
-                    if (product == null)
+                    producto.Cantidad = agregadoProducto.cantidad;
+                    await _carritoService.UpdateCarritoProducto(producto);
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("se ha ingresado los datos en un formato incorrecto");
+            }
+
+
+        }
+
+        [HttpDelete("{ClientId}/{ProductoId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteProducto(int ClientId, int ProductoId)
+        {
+            try
+            {
+                var client = _clienteService.GetClienteById(ClientId);
+                if (client == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El Id del producto ingresado no existe.",
-                              statuscode = "404"
+                        message = "El Id del cliente ingresado no existe.",
+                        statuscode = "404"
 
-                         };
-                         return NotFound(error);
+                    };
+                    return NotFound(error);
 
-                    }
-                    var carrito = _carritoService.GetCarritoByClientId(ClientId);
-                    if (carrito == null)
+                }
+                var product = _productService.FindProductById(ProductoId);
+                if (product == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var error = new ErrorDto
-                         {
-                              message = "El carrito esta vacio, porfavor ingrese productos.",
-                              statuscode = "409"
+                        message = "El Id del producto ingresado no existe.",
+                        statuscode = "404"
 
-                         };
-                         return Conflict(error);
+                    };
+                    return NotFound(error);
 
-                    }
-                    else
+                }
+                var carrito = _carritoService.GetCarritoByClientId(ClientId);
+                if (carrito == null)
+                {
+                    var error = new ErrorDto
                     {
-                         var producto = _carritoService.GetCarritoProductoById(carrito.CarritoId, ProductoId);
-                         if (producto == null)
-                         {
-                              var error = new ErrorDto
-                              {
-                                   message = "Ese Producto no esta ingresado en el carrito o ya fue eliminado., ingrese el Id de un producto ya existente dentro del carrito.",
-                                   statuscode = "404"
+                        message = "El carrito esta vacio, porfavor ingrese productos.",
+                        statuscode = "409"
 
-                              };
-                              return NotFound(error);
-                         }
-                         await _carritoService.DeleteCarritoProducto(producto);
-                         return NoContent();
+                    };
+                    return Conflict(error);
+
+                }
+                else
+                {
+                    var producto = _carritoService.GetCarritoProductoById(carrito.CarritoId, ProductoId);
+                    if (producto == null)
+                    {
+                        var error = new ErrorDto
+                        {
+                            message = "Ese Producto no esta ingresado en el carrito o ya fue eliminado., ingrese el Id de un producto ya existente dentro del carrito.",
+                            statuscode = "404"
+
+                        };
+                        return NotFound(error);
                     }
-               }
-               catch (Exception)
-               {
+                    await _carritoService.DeleteCarritoProducto(producto);
+                    return NoContent();
+                }
+            }
+            catch (Exception)
+            {
 
-                    return BadRequest("se ha ingresado los datos en un formato incorrecto");
-               }
+                return BadRequest("se ha ingresado los datos en un formato incorrecto");
+            }
 
 
-          }
-     }
+        }
+    }
 }

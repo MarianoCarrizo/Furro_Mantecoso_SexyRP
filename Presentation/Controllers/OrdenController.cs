@@ -1,11 +1,8 @@
-﻿using Application.Services;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace Presentation.Controllers
 {
@@ -79,7 +76,7 @@ namespace Presentation.Controllers
                          };
                          _ordenService.CreateOrden(Orden);
                          carrito.Estado = false;
-                        await _carritoService.UpdateCarrito(carrito);
+                         await _carritoService.UpdateCarrito(carrito);
                          return Ok("Se ha creado una Orden");
                     }
                }

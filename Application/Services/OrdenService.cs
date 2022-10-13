@@ -1,9 +1,7 @@
 ﻿using Application.DataAccess;
 
 using Application.Services.Interfaces;
-using AutoMapper;
 using Domain.Entities;
-using Domain.Models;
 
 namespace Application.Services
 {
@@ -15,17 +13,17 @@ namespace Application.Services
         public OrdenService(IOrdenRepository repository)
         {
             _repository = repository;
-          }
+        }
 
         public Orden CreateOrden(Orden order)
         {
             return _repository.CreateOrden(order);
         }
 
-          public async Task<List<Orden>> GetOrder(DateTime? from = null, DateTime? to = null)
-          {
-              return _repository.GetOrder(from, to);
-               
-          }
-     }
+        public async Task<List<Orden>> GetOrder(DateTime? from = null, DateTime? to = null)
+        {
+            return _repository.GetOrder(from, to);
+
+        }
+    }
 }

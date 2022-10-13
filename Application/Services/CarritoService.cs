@@ -28,7 +28,7 @@ namespace Application.Services
             return _CarritoRepository.UpdateCarrito(carrito);
         }
 
-          public async Task<CarritoProducto> DeleteCarritoProducto(CarritoProducto carrito)
+        public async Task<CarritoProducto> DeleteCarritoProducto(CarritoProducto carrito)
         {
             return _CarritoRepository.DeleteCarritoProducto(carrito);
         }
@@ -44,17 +44,17 @@ namespace Application.Services
         }
 
 
-          public  async Task<CarritoProducto> UpdateCarritoProducto(CarritoProducto carrito)
-          {
-              
-               return _CarritoRepository.UpdateCarritoProducto(carrito);
-          }
+        public async Task<CarritoProducto> UpdateCarritoProducto(CarritoProducto carrito)
+        {
 
-          public Carrito GetRawCarritoById(Guid id)
-          {
-               return _CarritoRepository.GetRawCarritoById(id);
-          }
-     }
+            return _CarritoRepository.UpdateCarritoProducto(carrito);
+        }
+
+        public Carrito GetRawCarritoById(Guid id)
+        {
+            return _CarritoRepository.GetRawCarritoById(id);
+        }
+    }
 
 
 

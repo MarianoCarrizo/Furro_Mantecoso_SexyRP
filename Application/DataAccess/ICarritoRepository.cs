@@ -8,7 +8,7 @@ namespace Application.DataAccess
         public Carrito GetCarritoById(Guid id);
         public Carrito GetRawCarritoById(Guid id);
 
-          public Carrito GetCarritoByClientId(int id);
+        public Carrito GetCarritoByClientId(int id);
 
         public Carrito UpdateCarrito(Carrito Carrito);
 

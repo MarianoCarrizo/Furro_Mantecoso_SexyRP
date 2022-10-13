@@ -1,6 +1,5 @@
 ﻿using Application.Services.Interfaces;
 using Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -26,7 +25,7 @@ namespace Presentation.Controllers
             {
                 var cliente = await _clienteService.GetClienteById(id);
 
-                if(cliente != null)
+                if (cliente != null)
                 {
                     return Ok(cliente);
                 }
@@ -41,33 +40,33 @@ namespace Presentation.Controllers
         }
 
 
-          [HttpPost]
-          [ProducesResponseType(typeof(ClienteDto), StatusCodes.Status201Created)]
-          [ProducesResponseType(typeof(ErrorDto),StatusCodes.Status409Conflict)]
-          [ProducesResponseType(typeof(ErrorDto),StatusCodes.Status400BadRequest)]
-          public async Task<IActionResult> AddCliente([FromBody]ClienteDto client)
-          {
-               try
-               {
-                    var cliente = await _clienteService.CreateClient(client);
+        [HttpPost]
+        [ProducesResponseType(typeof(ClienteDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddCliente([FromBody] ClienteDto client)
+        {
+            try
+            {
+                var cliente = await _clienteService.CreateClient(client);
 
-                    if (cliente == null)
+                if (cliente == null)
+                {
+                    var errorDto = new ErrorDto
                     {
-                         var errorDto = new ErrorDto
-                         {
-                              message = "Ha ocurrido un error. El DNI ingresado corresponde a un usuario ya existente en el sistema.",
-                              statuscode = "409"
-                         };
-                         return Conflict(errorDto);
-                    }
-                    return Created("Se ha creado nuevo Cliente", client);
-                   
-               }
-               catch (Exception)
-               {
+                        message = "Ha ocurrido un error. El DNI ingresado corresponde a un usuario ya existente en el sistema.",
+                        statuscode = "409"
+                    };
+                    return Conflict(errorDto);
+                }
+                return Created("Se ha creado nuevo Cliente", client);
 
-                    return BadRequest("se ha ingresado los datos en un formato incorrecto");
-               }
-          }
-     }
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("se ha ingresado los datos en un formato incorrecto");
+            }
+        }
+    }
 }
