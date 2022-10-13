@@ -87,6 +87,32 @@ namespace Presentation.Controllers
 
           }
 
- 
+
+          [HttpGet]
+          [ProducesResponseType(typeof(List<OrdenDto>), StatusCodes.Status200OK)]
+          [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
+          public async Task<IActionResult> GetOrdenes([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
+          {
+               try
+               {
+                    var ordenes = await _ordenService.GetOrder(from, to);
+                   
+                    return Ok(ordenes);
+
+               }
+               catch (Exception e)
+               {
+                    var error = new ErrorDto()
+                    {
+                         message = e.Message,
+                         statuscode = "404",
+                    };
+                    return NotFound(error);
+               }
+
+
+          }
+
+
      }
 }

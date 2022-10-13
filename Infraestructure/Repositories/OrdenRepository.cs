@@ -28,5 +28,9 @@ namespace Infraestructure.Repositories
                return _context.Ordenes.Where(o => o.Fecha.Date == DateTime.Now.Date).ToList();
           }
 
+          public List<Orden> GetOrder(DateTime? from = null, DateTime? to = null)
+          {
+               return _context.Ordenes.Where(o => o.Fecha.Date >= from || o.Fecha.Date <= to).ToList(); 
+          }
      }
 }

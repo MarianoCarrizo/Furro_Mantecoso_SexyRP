@@ -6,12 +6,12 @@ namespace TP.Application.Utilities
 {
     public class MappingProfile : Profile
     {
-        public MappingProfile()
-        {
+          public MappingProfile()
+          {
                CreateMap<Cliente, ClienteDto>();
                CreateMap<Producto, ProductoDto>().ReverseMap();
-               CreateMap<Venta, VentaDtoForDisplay>();
-        
+               CreateMap<Orden, OrdenDto>().ReverseMap();
+
 
           }
     }
