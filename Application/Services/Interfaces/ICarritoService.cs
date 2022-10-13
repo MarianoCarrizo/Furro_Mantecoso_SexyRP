@@ -8,7 +8,7 @@ namespace Application.Services.Interfaces
 
         Carrito GetCarritoById(Guid id);
 
-        Carrito CreateCarrito(Carrito carrito);
+       Task<Carrito> CreateCarrito(Carrito carrito);
 
         CarritoProducto DeleteCarritoProducto(CarritoProducto carrito);
 
@@ -16,7 +16,7 @@ namespace Application.Services.Interfaces
 
         CarritoProducto CreateCarritoProducto(CarritoProducto carritoProducto);
 
-        Carrito UpdateCarrito(Carrito carrito);
+         Task<Carrito> UpdateCarrito(Carrito carrito);
 
 
 

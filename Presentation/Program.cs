@@ -31,6 +31,8 @@ namespace Presentation
                builder.Services.AddTransient<IVentaRepository, VentaRepository>();
                builder.Services.AddTransient<IProductRepository, ProductRepository>();
                builder.Services.AddTransient<IProductService, ProductService>();
+               builder.Services.AddTransient<ICarritoRepository, CarritoRepository>();
+               builder.Services.AddTransient<ICarritoService, CarritoService>();
                builder.Services.AddTransient < IOrdenRepository, OrdenRepository>();
                builder.Services.AddTransient<IVentaRepository, VentaRepository>();
                builder.Services.AddTransient<IClienteService, ClienteService>();
