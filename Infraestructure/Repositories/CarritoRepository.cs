@@ -74,6 +74,12 @@ namespace Infraestructure.Repositories
                return Carrito;
           }
 
-
+          public CarritoProducto UpdateCarritoProducto(CarritoProducto carrito)
+          {
+              _context.CarritoProductos.Update(carrito);
+               _context.SaveChanges();
+               return carrito;
+          }
+         
      }
 }

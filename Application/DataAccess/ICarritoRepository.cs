@@ -11,7 +11,9 @@ namespace Application.DataAccess
 
         public Carrito UpdateCarrito(Carrito Carrito);
 
-        public bool IsActive(int Id);
+          public CarritoProducto UpdateCarritoProducto(CarritoProducto carrito);
+
+          public bool IsActive(int Id);
 
         public Carrito CreateCarrito(Carrito carrito);
 

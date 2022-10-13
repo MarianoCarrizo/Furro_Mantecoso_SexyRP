@@ -47,7 +47,13 @@ namespace Application.Services
         {
             return _CarritoRepository.CreateCarritoProducto(carritoProducto);
         }
-    }
+
+          public  async Task<CarritoProducto> UpdateCarritoProducto(CarritoProducto carrito)
+          {
+              
+               return _CarritoRepository.UpdateCarritoProducto(carrito);
+          }
+     }
 
 
 
