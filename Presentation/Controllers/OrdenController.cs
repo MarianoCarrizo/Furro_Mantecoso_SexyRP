@@ -93,7 +93,7 @@ namespace Presentation.Controllers
           [HttpGet]
           [ProducesResponseType(typeof(List<OrdenDto>), StatusCodes.Status200OK)]
           [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
-          public async Task<IActionResult> GetOrdenes([FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
+          public async Task<IActionResult> GetOrdenes(DateTime? from = null,DateTime? to = null)
           {
                try
                {

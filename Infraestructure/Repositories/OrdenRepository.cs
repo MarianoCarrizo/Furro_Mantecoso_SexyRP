@@ -26,6 +26,9 @@ namespace Infraestructure.Repositories
 
         public List<Orden> GetOrder(DateTime? from = null, DateTime? to = null)
         {
+            if(from == null && to == null) {
+                return _context.Ordenes.ToList();
+            }
             return _context.Ordenes.Where(o => o.Fecha.Date >= from || o.Fecha.Date <= to).ToList();
         }
     }
