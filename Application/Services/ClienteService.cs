@@ -41,10 +41,10 @@ namespace Application.Services
                 var client = new Cliente()
                 {
                     Dni = cliente.Dni,
-                    Nombre = cliente.name,
-                    Apellido = cliente.lastname,
-                    Direccion = cliente.address,
-                    Telefono = cliente.phoneNumber,
+                    Nombre = cliente.Nombre,
+                    Apellido = cliente.Apellido,
+                    Direccion = cliente.Direccion,
+                    Telefono = cliente.Telefono,
                 };
 
                 var clientcreado = await _repository.AddCliente(client);

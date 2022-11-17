@@ -3,9 +3,9 @@
     public class ClienteDto
     {
         public string Dni { get; set; } = null!;
-        public string name { get; set; } = null!;
-        public string lastname { get; set; } = null!;
-        public string address { get; set; } = null!;
-        public string phoneNumber { get; set; } = null!;
+        public string Nombre { get; set; } = null!;
+        public string Apellido { get; set; } = null!;
+        public string Direccion { get; set; } = null!;
+        public string Telefono { get; set; } = null!;
     }
 }
