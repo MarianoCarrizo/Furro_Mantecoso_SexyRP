@@ -153,7 +153,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "500c",
                           Marca = "Brahma",
                           Codigo = "12956",
-                          Image = "https://m.media-amazon.com/images/P/B006YOAB5K.01._SCLZZZZZZZ_SX500_.jpg",
+                          Image = "https://www.delmayoristaacasa.com.ar/wp-content/uploads/2022/11/DSC_3122-1.jpg",
                      },
                      new Producto
                      {
