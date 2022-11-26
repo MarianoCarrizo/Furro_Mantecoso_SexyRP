@@ -8,6 +8,6 @@ namespace Application.Services.Interfaces
         Task<ProductoFindDto> FindProductById(int id);
         Task<Producto> FindRawProductById(int id);
 
-        Task<List<ProductoDto>> GetProducts(string? name = null, bool? sort = null);
+        Task<List<ProductoFindDto>> GetProducts(string? name = null, bool? sort = null);
     }
 }

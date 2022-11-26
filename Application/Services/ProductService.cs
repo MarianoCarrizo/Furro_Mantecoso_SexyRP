@@ -47,16 +47,20 @@ namespace Application.Services
 
 
 
-        public async Task<List<ProductoDto>> GetProducts(string? name = null, bool? sort = null)
+        public async Task<List<ProductoFindDto>> GetProducts(string? name = null, bool? sort = null)
         {
             var product = _repository.GetProductos(name, sort);
-            var lista = new List<ProductoDto>();
+            var lista = new List<ProductoFindDto>();
             foreach (Producto pro in product.Result)
             {
-                var producto = new ProductoDto()
+                var producto = new ProductoFindDto()
                 {
                     Nombre = pro.Nombre,
                     Precio = pro.Precio,
+                    Codigo = pro.Codigo,
+                    Descripcion = pro.Descripcion,
+                    Marca = pro.Marca,
+                    Image = pro.Image
                 };
                 lista.Add(producto);
             }
