@@ -29,7 +29,7 @@ namespace Infraestructure.Repositories
             if(from == null && to == null) {
                 return _context.Ordenes.ToList();
             }
-            return _context.Ordenes.Where(o => o.Fecha.Date >= from || o.Fecha.Date <= to).ToList();
+            return _context.Ordenes.Where(o => o.Fecha.Date >= from && o.Fecha.Date <= to).ToList();
         }
     }
 }

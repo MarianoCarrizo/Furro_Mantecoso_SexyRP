@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.WebRequestMethods;
 
 namespace Infraestructure.Persistance
 {
@@ -123,7 +124,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "Lata de tomate de 600g",
                           Marca = "Marolio",
                           Codigo = "12956",
-                          Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/5/1/5100.jpg",
+                          Image = "https://i.imgur.com/gqJVlWk.jpg",
                      },
                      new Producto
                      {
@@ -133,7 +134,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "lata de Arvejas de 600g",
                           Marca = "marolio",
                           Codigo = "77734",
-                          Image = "https://supermercadoacuario.com.ar/app/files/company_35/products/66558_7797470005576.jpg",
+                          Image = "https://i.imgur.com/AARTUJY.jpg",
                      },
                      new Producto
                      {
@@ -143,7 +144,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "Fideos",
                           Marca = "Marolio",
                           Codigo = "67413",
-                          Image = "http://www.marolio.com.ar/sites/default/files/styles/full_post/public/Tirabuzon500g.jpg?itok=DnMf4I96",
+                          Image = "https://i.imgur.com/HNZyMIF.jpg",
                      },
                      new Producto
                      {
@@ -153,7 +154,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "500c",
                           Marca = "Brahma",
                           Codigo = "12956",
-                          Image = "https://www.delmayoristaacasa.com.ar/wp-content/uploads/2022/11/DSC_3122-1.jpg",
+                          Image = "https://i.imgur.com/lUrXZUw.jpg",
                      },
                      new Producto
                      {
@@ -162,8 +163,8 @@ namespace Infraestructure.Persistance
                           Nombre = "botellla de agua con gas 500cc ",
                           Descripcion = "botella de agua con gas 500ccc",
                           Marca = "Villavicencio",
-                          Codigo = "01756",
-                          Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/2/2/22309.jpg",
+                         Codigo = "01756",
+                          Image = "https://i.imgur.com/CfHIPke.jpg",
                      },
                      new Producto
                      {
@@ -173,7 +174,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "estuche de 4 unidades",
                           Marca = "Champion",
                           Codigo = "00056",
-                          Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/2/6/26762.jpg",
+                          Image = "https://i.imgur.com/doMqjA2.jpg",
                      },
                      new Producto
                      {
@@ -183,7 +184,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "arroz '0000' 500gr",
                           Marca = "El Dique",
                           Codigo = "00001",
-                          Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/1/7/17512.jpg",
+                          Image = "https://i.imgur.com/k5enq60.jpg",
                      },
                      new Producto
                      {
@@ -193,7 +194,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "Aceite mezcla 900cc",
                           Marca = "Marolio",
                           Codigo = "00050",
-                          Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/3/0/304.jpg",
+                          Image = "https://i.imgur.com/YZJQGpC.jpg",
                      },
                      new Producto
                      {
@@ -203,7 +204,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "cacao en polvo 180gr",
                           Marca = "Marolio",
                           Codigo = "03561",
-                          Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/9/8/984.jpg",
+                          Image = "https://i.imgur.com/eAFHPvX.jpg",
                      },
                      new Producto
                      {
@@ -213,7 +214,7 @@ namespace Infraestructure.Persistance
                           Descripcion = "queso rallado 100Gr",
                           Marca = "Gikar",
                           Codigo = "09993",
-                          Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/1/7/17076.jpg",
+                          Image = "https://i.imgur.com/jaFvFal.jpg",
                      });
 
           }

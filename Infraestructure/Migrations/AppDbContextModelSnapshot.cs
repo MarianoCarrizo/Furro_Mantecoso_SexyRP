@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infraestructure.Migrations
 {
-     [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -172,7 +172,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 1,
                             Codigo = "12956",
                             Descripcion = "Lata de tomate de 600g",
-                            Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/5/1/5100.jpg",
+                            Image = "https://i.imgur.com/gqJVlWk.jpg",
                             Marca = "Marolio",
                             Nombre = "Lata de Tomate",
                             Precio = 30m
@@ -182,7 +182,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 2,
                             Codigo = "77734",
                             Descripcion = "lata de Arvejas de 600g",
-                            Image = "https://supermercadoacuario.com.ar/app/files/company_35/products/66558_7797470005576.jpg",
+                            Image = "https://i.imgur.com/AARTUJY.jpg",
                             Marca = "marolio",
                             Nombre = "Lata de Arvejas",
                             Precio = 90m
@@ -192,7 +192,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 3,
                             Codigo = "67413",
                             Descripcion = "Fideos",
-                            Image = "http://www.marolio.com.ar/sites/default/files/styles/full_post/public/Tirabuzon500g.jpg?itok=DnMf4I96",
+                            Image = "https://i.imgur.com/HNZyMIF.jpg",
                             Marca = "Marolio",
                             Nombre = "Fideos Tirabuzon",
                             Precio = 70m
@@ -202,7 +202,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 4,
                             Codigo = "12956",
                             Descripcion = "500c",
-                            Image = "https://m.media-amazon.com/images/P/B006YOAB5K.01._SCLZZZZZZZ_SX500_.jpg",
+                            Image = "https://i.imgur.com/lUrXZUw.jpg",
                             Marca = "Brahma",
                             Nombre = "Cerveza  Lata ",
                             Precio = 148m
@@ -212,7 +212,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 5,
                             Codigo = "01756",
                             Descripcion = "botella de agua con gas 500ccc",
-                            Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/2/2/22309.jpg",
+                            Image = "https://i.imgur.com/CfHIPke.jpg",
                             Marca = "Villavicencio",
                             Nombre = "botellla de agua con gas 500cc ",
                             Precio = 30m
@@ -222,7 +222,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 6,
                             Codigo = "00056",
                             Descripcion = "estuche de 4 unidades",
-                            Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/2/6/26762.jpg",
+                            Image = "https://i.imgur.com/doMqjA2.jpg",
                             Marca = "Champion",
                             Nombre = "Hamburgesa",
                             Precio = 290m
@@ -232,7 +232,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 7,
                             Codigo = "00001",
                             Descripcion = "arroz '0000' 500gr",
-                            Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/1/7/17512.jpg",
+                            Image = "https://i.imgur.com/k5enq60.jpg",
                             Marca = "El Dique",
                             Nombre = "arroz",
                             Precio = 103m
@@ -242,7 +242,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 8,
                             Codigo = "00050",
                             Descripcion = "Aceite mezcla 900cc",
-                            Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/3/0/304.jpg",
+                            Image = "https://i.imgur.com/YZJQGpC.jpg",
                             Marca = "Marolio",
                             Nombre = "Aceite",
                             Precio = 257m
@@ -252,7 +252,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 9,
                             Codigo = "03561",
                             Descripcion = "cacao en polvo 180gr",
-                            Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/9/8/984.jpg",
+                            Image = "https://i.imgur.com/eAFHPvX.jpg",
                             Marca = "Marolio",
                             Nombre = "Cacao en polvo",
                             Precio = 106m
@@ -262,7 +262,7 @@ namespace Infraestructure.Migrations
                             ProductoId = 10,
                             Codigo = "09993",
                             Descripcion = "queso rallado 100Gr",
-                            Image = "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/1/7/17076.jpg",
+                            Image = "https://i.imgur.com/jaFvFal.jpg",
                             Marca = "Gikar",
                             Nombre = "Queso Rallado",
                             Precio = 50m

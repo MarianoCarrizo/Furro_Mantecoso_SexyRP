@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -117,16 +118,16 @@ namespace Infraestructure.Migrations
                 columns: new[] { "ProductoId", "Codigo", "Descripcion", "Image", "Marca", "Nombre", "Precio" },
                 values: new object[,]
                 {
-                    { 1, "12956", "Lata de tomate de 600g", "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/5/1/5100.jpg", "Marolio", "Lata de Tomate", 30m },
-                    { 2, "77734", "lata de Arvejas de 600g", "https://supermercadoacuario.com.ar/app/files/company_35/products/66558_7797470005576.jpg", "marolio", "Lata de Arvejas", 90m },
-                    { 3, "67413", "Fideos", "http://www.marolio.com.ar/sites/default/files/styles/full_post/public/Tirabuzon500g.jpg?itok=DnMf4I96", "Marolio", "Fideos Tirabuzon", 70m },
-                    { 4, "12956", "500c", "https://m.media-amazon.com/images/P/B006YOAB5K.01._SCLZZZZZZZ_SX500_.jpg", "Brahma", "Cerveza  Lata ", 148m },
-                    { 5, "01756", "botella de agua con gas 500ccc", "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/2/2/22309.jpg", "Villavicencio", "botellla de agua con gas 500cc ", 30m },
-                    { 6, "00056", "estuche de 4 unidades", "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/2/6/26762.jpg", "Champion", "Hamburgesa", 290m },
-                    { 7, "00001", "arroz '0000' 500gr", "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/1/7/17512.jpg", "El Dique", "arroz", 103m },
-                    { 8, "00050", "Aceite mezcla 900cc", "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/3/0/304.jpg", "Marolio", "Aceite", 257m },
-                    { 9, "03561", "cacao en polvo 180gr", "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/9/8/984.jpg", "Marolio", "Cacao en polvo", 106m },
-                    { 10, "09993", "queso rallado 100Gr", "https://maxiconsumo.com/media/catalog/product/cache/8313a15b471f948db4d9d07d4a9f04a2/1/7/17076.jpg", "Gikar", "Queso Rallado", 50m }
+                    { 1, "12956", "Lata de tomate de 600g", "https://i.imgur.com/gqJVlWk.jpg", "Marolio", "Lata de Tomate", 30m },
+                    { 2, "77734", "lata de Arvejas de 600g", "https://i.imgur.com/AARTUJY.jpg", "marolio", "Lata de Arvejas", 90m },
+                    { 3, "67413", "Fideos", "https://i.imgur.com/HNZyMIF.jpg", "Marolio", "Fideos Tirabuzon", 70m },
+                    { 4, "12956", "500c", "https://i.imgur.com/lUrXZUw.jpg", "Brahma", "Cerveza  Lata ", 148m },
+                    { 5, "01756", "botella de agua con gas 500ccc", "https://i.imgur.com/CfHIPke.jpg", "Villavicencio", "botellla de agua con gas 500cc ", 30m },
+                    { 6, "00056", "estuche de 4 unidades", "https://i.imgur.com/doMqjA2.jpg", "Champion", "Hamburgesa", 290m },
+                    { 7, "00001", "arroz '0000' 500gr", "https://i.imgur.com/k5enq60.jpg", "El Dique", "arroz", 103m },
+                    { 8, "00050", "Aceite mezcla 900cc", "https://i.imgur.com/YZJQGpC.jpg", "Marolio", "Aceite", 257m },
+                    { 9, "03561", "cacao en polvo 180gr", "https://i.imgur.com/eAFHPvX.jpg", "Marolio", "Cacao en polvo", 106m },
+                    { 10, "09993", "queso rallado 100Gr", "https://i.imgur.com/jaFvFal.jpg", "Gikar", "Queso Rallado", 50m }
                 });
 
             migrationBuilder.CreateIndex(
