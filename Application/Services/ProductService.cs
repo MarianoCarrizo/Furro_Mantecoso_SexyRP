@@ -55,6 +55,7 @@ namespace Application.Services
             {
                 var producto = new ProductoFindDto()
                 {
+                    ProductoId = pro.ProductoId,
                     Nombre = pro.Nombre,
                     Precio = pro.Precio,
                     Codigo = pro.Codigo,

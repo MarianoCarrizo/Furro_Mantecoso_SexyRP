@@ -1,5 +1,7 @@
 ﻿using Application.Services.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.model;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,14 +14,42 @@ namespace Presentation.Controllers
         private readonly ICarritoService _carritoService;
         private readonly IProductService _productService;
         private readonly IClienteService _clienteService;
+        private readonly IMapper _mapper;
 
-        public CarritoController(ICarritoService carritoService, IProductService productoService, IClienteService clienteService)
+        public CarritoController(ICarritoService carritoService, IProductService productoService, IClienteService clienteService, IMapper mapper)
         {
             _carritoService = carritoService;
             _productService = productoService;
             _clienteService = clienteService;
+            _mapper = mapper;
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(typeof(CarritoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> getCarritoById(int id)
+        {
+            try
+            {
+                var carrito =_carritoService.GetCarritoByClientId(id);
+               
+                    var carritoMap = _mapper.Map<CarritoDto>(carrito);
+                   
+                if (carritoMap != null)
+                {
+                    return Ok(carritoMap);
+                }
+
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(500, "Internal Server Error"+ e.Message);
+            }
+        }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -87,20 +117,28 @@ namespace Presentation.Controllers
                 }
                 else
                 {
+                   
                     var producto = new CarritoProducto
                     {
+                     
                         Cantidad = agregadoProducto.cantidad,
                         ProductoId = agregadoProducto.ProductoId,
                     };
-                    carrito.CarritoProductos.Add(producto);
+                    var checkcarrito = _carritoService.GetCarritoProductoById(carrito.CarritoId, agregadoProducto.ProductoId);
+                    if (checkcarrito != null) {
+                        checkcarrito.Cantidad = checkcarrito.Cantidad + producto.Cantidad;                     
+                        _carritoService.UpdateCarritoProducto(checkcarrito);
+                        return NoContent();
+                    }
+                        carrito.CarritoProductos.Add(producto);
                     await _carritoService.UpdateCarrito(carrito);
                     return NoContent();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                return BadRequest("se ha ingresado los datos en un formato incorrecto");
+                return BadRequest("se ha ingresado los datos en un formato incorrecto:"+e.Message);
             }
 
 

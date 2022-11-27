@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entities;
+using Domain.model;
 using Domain.Models;
 
 namespace TP.Application.Utilities
@@ -11,6 +12,9 @@ namespace TP.Application.Utilities
             CreateMap<Cliente, ClienteDto>();
             CreateMap<Producto, ProductoDto>().ReverseMap();
             CreateMap<Orden, OrdenDto>().ReverseMap();
+            CreateMap<Carrito, CarritoDto>().ReverseMap();
+            CreateMap<CarritoProducto, CarritoProductoDTO>().ReverseMap();
+            CreateMap<Producto,ProductoCarritoDTO>().ReverseMap();
 
 
         }

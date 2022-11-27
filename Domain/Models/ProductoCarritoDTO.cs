@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    public class ProductoFindDto
+    public class ProductoCarritoDTO
     {
         public int ProductoId { get; set; }
         public string Nombre { get; set; } = null!;
@@ -9,6 +9,7 @@
         public string Codigo { get; set; } = null!;
         public decimal Precio { get; set; }
         public string Image { get; set; } = null!;
+
 
 
     }
