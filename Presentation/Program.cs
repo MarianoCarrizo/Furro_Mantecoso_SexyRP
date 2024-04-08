@@ -39,7 +39,10 @@ namespace Presentation
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.DocumentTitle = "BACKEND";
+                });
             }
 
             app.UseHttpsRedirection();
