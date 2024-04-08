@@ -16,10 +16,10 @@ namespace Presentation
             IConfiguration configuration = configBuilder.Build();
             string connectionString = configuration.GetSection("ConnectionString").Value;
 
-            // Add services to the container.
+    
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
