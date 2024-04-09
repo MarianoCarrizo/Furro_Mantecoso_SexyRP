@@ -9,7 +9,7 @@ namespace Tests.Application;
 
 
 [TestFixture]
-public class ProdutServiceTest
+public class ProductServiceTest
 {
    
     private readonly IProductService _productService;
@@ -18,7 +18,7 @@ public class ProdutServiceTest
 
 
     
-    public ProdutServiceTest()
+    public ProductServiceTest()
     {
         _productRepository = new Mock<IProductRepository>();    
         _mapper = new Mock<IMapper>();
