@@ -22,9 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Presentation\" />
-    <Folder Include="Application\" />
-  </ItemGroup>
-
 </Project>

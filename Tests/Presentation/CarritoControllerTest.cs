@@ -25,7 +25,7 @@ public class CarritoControllerTest
         _clienteService = new Mock<IClienteService>();
         _productService = new Mock<IProductService>();
         _mapper = new Mock<IMapper>();
-        _carritoController = new CarritoController(_carritoService.Object, _productService.Object, _clienteService.Object, _mapper.Object)
+        _carritoController = new CarritoController(_carritoService.Object, _productService.Object, _clienteService.Object, _mapper.Object);
     }
 
     [Test]
