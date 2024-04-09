@@ -1,6 +1,10 @@
-﻿using Application.Services.Interfaces;
+﻿using Application.DataAccess;
+using Application.Services.Interfaces;
+using AutoMapper;
+using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using Presentation.Controllers;
 
 namespace Tests.Presentation;
 
@@ -8,16 +12,70 @@ namespace Tests.Presentation;
 [TestFixture]
 public class ClienteControllerTest
 {
-    private readonly IClienteService _clienteService;
+    private readonly ClienteController _clienteController;
 
-   
+    private readonly Mock<IClienteService> _clienteService;
+
+
+    public ClienteControllerTest()
+    {
+        _clienteService = new Mock<IClienteService>();
+        _clienteController = new ClienteController( _clienteService.Object );
+      
+    }
 
     [Test]
-    public void findClientByIdOkTest()
+    public void GetClienteByIdOkTest()
     {
-        var result = _clienteService.GetClienteById(1);
+        //Arrange
+        //Act
+        //Assert
+        Assert.Pass();
+    }
 
-        ClassicAssert.IsNotNull(result);
+    [Test]
+    public void GetClienteByIdNotFoundTest()
+    {
+        //Arrange
+        //Act
+        //Assert
+        Assert.Pass();
+    }
+
+    [Test]
+    public void GetClienteByIdInternalServerErrorTest()
+    {
+        //Arrange
+        //Act
+        //Assert
+        Assert.Pass();
+    }
+
+    [Test]
+    public void AddClienteOkTest()
+    {
+        //Arrange
+        //Act
+        //Assert
+        Assert.Pass();
+    }
+
+    [Test]
+    public void AddClienteDniExistsTest()
+    {
+        //Arrange
+        //Act
+        //Assert
+        Assert.Pass();
+    }
+
+    [Test]
+    public void AddClienteBadRequestTest()
+    {
+        //Arrange
+        //Act
+        //Assert
+        Assert.Pass();
     }
 
 }

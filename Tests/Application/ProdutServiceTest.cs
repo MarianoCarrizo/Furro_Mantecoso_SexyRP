@@ -9,22 +9,24 @@ namespace Tests.Application;
 
 
 [TestFixture]
-public class ClienteServiceTest
+public class ProdutServiceTest
 {
-    private readonly IClienteService _clienteService;
-    private readonly Mock<IClienteRepository> _clienteRepository;
+   
+    private readonly IProductService _productService;
     private readonly Mock<IMapper> _mapper;
+    private readonly Mock<IProductRepository> _productRepository;
+
+
     
-    public ClienteServiceTest()
+    public ProdutServiceTest()
     {
-        _clienteRepository = new Mock<IClienteRepository>();  
+        _productRepository = new Mock<IProductRepository>();    
         _mapper = new Mock<IMapper>();
-        _clienteService = new ClienteService(_clienteRepository.Object, _mapper.Object);
+        _productService = new ProductService(_productRepository.Object, _mapper.Object);
     }
 
-  
     [Test]
-    public void GetClienteByIdOkTest()
+    public void FindProductByIdOkTest()
     {
         //Arrange
         //Act
@@ -33,7 +35,7 @@ public class ClienteServiceTest
     }
 
     [Test]
-    public void CreateClientOkTest()
+    public void FindRawProductByIdOkTest()
     {
         //Arrange
         //Act
@@ -42,12 +44,13 @@ public class ClienteServiceTest
     }
 
     [Test]
-    public void CreateClientClientExistsTest()
+    public void GetProductsOkTest()
     {
         //Arrange
         //Act
         //Assert
         Assert.Pass();
     }
+
 
 }
