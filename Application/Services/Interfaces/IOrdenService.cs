@@ -7,7 +7,7 @@ namespace Application.Services.Interfaces
 
         Orden CreateOrden(Orden order);
 
-        Task<List<Orden>> GetOrder(DateTime? from = null, DateTime? to = null);
+        Task<OrdenResponse> GetOrder(int limit, int page, DateTime? from = null, DateTime? to = null);
 
 
     }

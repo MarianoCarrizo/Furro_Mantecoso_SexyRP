@@ -14,15 +14,15 @@ public class ClienteServiceTest
     private readonly IClienteService _clienteService;
     private readonly Mock<IClienteRepository> _clienteRepository;
     private readonly Mock<IMapper> _mapper;
-    
+
     public ClienteServiceTest()
     {
-        _clienteRepository = new Mock<IClienteRepository>();  
+        _clienteRepository = new Mock<IClienteRepository>();
         _mapper = new Mock<IMapper>();
         _clienteService = new ClienteService(_clienteRepository.Object, _mapper.Object);
     }
 
-  
+
     [Test]
     public void GetClienteByIdOkTest()
     {

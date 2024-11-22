@@ -1,9 +1,7 @@
-﻿using Application.DataAccess;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using AutoMapper;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using Presentation.Controllers;
 
 namespace Tests.Presentation;
@@ -25,7 +23,7 @@ public class OrdenControllerTest
         _clienteService = new Mock<IClienteService>();
         _ordenService = new Mock<IOrdenService>();
         _mapper = new Mock<IMapper>();
-        _ordenController = new OrdenController(_carritoService.Object, _ordenService.Object,_clienteService.Object, _mapper.Object);
+        _ordenController = new OrdenController(_carritoService.Object, _ordenService.Object, _clienteService.Object, _mapper.Object);
     }
 
     [Test]

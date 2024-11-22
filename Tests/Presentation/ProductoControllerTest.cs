@@ -1,9 +1,6 @@
-﻿using Application.DataAccess;
-using Application.Services.Interfaces;
-using AutoMapper;
+﻿using Application.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using Presentation.Controllers;
 
 namespace Tests.Presentation;
@@ -12,7 +9,7 @@ namespace Tests.Presentation;
 [TestFixture]
 public class ProductoControllerTest
 {
-  
+
     private readonly ProductoController _productoController;
     private readonly Mock<IProductService> _productService;
 

@@ -1,7 +1,6 @@
 ﻿using Application.DataAccess;
 using Application.Services;
 using Application.Services.Interfaces;
-using AutoMapper;
 using Moq;
 using NUnit.Framework;
 
@@ -16,7 +15,7 @@ public class CarritoServiceTest
 
 
 
-    
+
     public CarritoServiceTest()
     {
         _carritoRepository = new Mock<ICarritoRepository>();

@@ -46,11 +46,35 @@ namespace Presentation.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<ProductoDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetProductos([FromQuery] string? name = null, [FromQuery] bool? sort = null)
+        public async Task<IActionResult> GetProductos([FromQuery] string? name = null, [FromQuery] bool? sort = null, [FromQuery] string? category = null)
         {
             try
             {
-                var productos = await _productService.GetProducts(name, sort);
+                var productos = await _productService.GetProducts(category, name, sort);
+                return Ok(productos);
+
+            }
+            catch (Exception e)
+            {
+                var error = new ErrorDto()
+                {
+                    message = e.Message,
+                    statuscode = "404",
+                };
+                return NotFound(error);
+            }
+
+
+        }
+
+        [HttpGet("find/")]
+        [ProducesResponseType(typeof(List<ProductoDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetProductosByCategoryOrBrand([FromQuery] string? category , [FromQuery] string? brand)
+        {
+            try
+            {
+                var productos = await _productService.GetProductosByCategoryOrBrand(category, brand);
                 return Ok(productos);
 
             }

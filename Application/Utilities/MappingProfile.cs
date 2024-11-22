@@ -2,11 +2,11 @@
 
 namespace Application.Utilities
 {
-     public class MappingProfile : Profile
-     {
-          public MappingProfile()
-          {
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
 
-          }
-     }
+        }
+    }
 }

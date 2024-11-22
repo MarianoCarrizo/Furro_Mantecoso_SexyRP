@@ -16,10 +16,10 @@ namespace Presentation
             IConfiguration configuration = configBuilder.Build();
             string connectionString = configuration.GetSection("ConnectionString").Value;
 
-    
+
 
             builder.Services.AddControllers();
-            
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));

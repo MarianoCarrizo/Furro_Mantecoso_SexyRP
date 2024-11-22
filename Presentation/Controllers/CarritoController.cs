@@ -33,10 +33,10 @@ namespace Presentation.Controllers
         {
             try
             {
-                var carrito =_carritoService.GetCarritoByClientId(id);
-               
-                    var carritoMap = _mapper.Map<CarritoDto>(carrito);
-                   
+                var carrito = _carritoService.GetCarritoByClientId(id);
+
+                var carritoMap = _mapper.Map<CarritoDto>(carrito);
+
                 if (carritoMap != null)
                 {
                     return Ok(carritoMap);
@@ -47,7 +47,7 @@ namespace Presentation.Controllers
             catch (Exception e)
             {
 
-                return StatusCode(500, "Internal Server Error"+ e.Message);
+                return StatusCode(500, "Internal Server Error" + e.Message);
             }
         }
 
@@ -117,20 +117,21 @@ namespace Presentation.Controllers
                 }
                 else
                 {
-                   
+
                     var producto = new CarritoProducto
                     {
-                     
+
                         Cantidad = agregadoProducto.cantidad,
                         ProductoId = agregadoProducto.ProductoId,
                     };
                     var checkcarrito = _carritoService.GetCarritoProductoById(carrito.CarritoId, agregadoProducto.ProductoId);
-                    if (checkcarrito != null) {
-                        checkcarrito.Cantidad = checkcarrito.Cantidad + producto.Cantidad;                     
+                    if (checkcarrito != null)
+                    {
+                        checkcarrito.Cantidad = checkcarrito.Cantidad + producto.Cantidad;
                         _carritoService.UpdateCarritoProducto(checkcarrito);
                         return NoContent();
                     }
-                        carrito.CarritoProductos.Add(producto);
+                    carrito.CarritoProductos.Add(producto);
                     await _carritoService.UpdateCarrito(carrito);
                     return NoContent();
                 }
@@ -138,7 +139,7 @@ namespace Presentation.Controllers
             catch (Exception e)
             {
 
-                return BadRequest("se ha ingresado los datos en un formato incorrecto:"+e.Message);
+                return BadRequest("se ha ingresado los datos en un formato incorrecto:" + e.Message);
             }
 
 

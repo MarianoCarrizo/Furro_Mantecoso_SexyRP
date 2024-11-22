@@ -11,16 +11,16 @@ namespace Tests.Application;
 [TestFixture]
 public class ProductServiceTest
 {
-   
+
     private readonly IProductService _productService;
     private readonly Mock<IMapper> _mapper;
     private readonly Mock<IProductRepository> _productRepository;
 
 
-    
+
     public ProductServiceTest()
     {
-        _productRepository = new Mock<IProductRepository>();    
+        _productRepository = new Mock<IProductRepository>();
         _mapper = new Mock<IMapper>();
         _productService = new ProductService(_productRepository.Object, _mapper.Object);
     }

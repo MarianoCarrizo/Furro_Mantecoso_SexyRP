@@ -1,9 +1,7 @@
-﻿using Application.DataAccess;
-using Application.Services.Interfaces;
+﻿using Application.Services.Interfaces;
 using AutoMapper;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using Presentation.Controllers;
 
 namespace Tests.Presentation;

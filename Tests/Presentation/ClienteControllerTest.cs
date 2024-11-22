@@ -1,9 +1,6 @@
-﻿using Application.DataAccess;
-using Application.Services.Interfaces;
-using AutoMapper;
+﻿using Application.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using Presentation.Controllers;
 
 namespace Tests.Presentation;
@@ -20,8 +17,8 @@ public class ClienteControllerTest
     public ClienteControllerTest()
     {
         _clienteService = new Mock<IClienteService>();
-        _clienteController = new ClienteController( _clienteService.Object );
-      
+        _clienteController = new ClienteController(_clienteService.Object);
+
     }
 
     [Test]

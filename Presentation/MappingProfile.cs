@@ -14,7 +14,7 @@ namespace TP.Application.Utilities
             CreateMap<Orden, OrdenDto>().ReverseMap();
             CreateMap<Carrito, CarritoDto>().ReverseMap();
             CreateMap<CarritoProducto, CarritoProductoDTO>().ReverseMap();
-            CreateMap<Producto,ProductoCarritoDTO>().ReverseMap();
+            CreateMap<Producto, ProductoCarritoDTO>().ReverseMap();
 
 
         }

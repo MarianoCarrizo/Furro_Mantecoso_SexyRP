@@ -24,12 +24,38 @@ namespace Infraestructure.Repositories
 
 
 
-        public List<Orden> GetOrder(DateTime? from = null, DateTime? to = null)
+        public List<Orden> GetOrderByPage(int limit, int page, DateTime? from = null, DateTime? to = null)
         {
-            if(from == null && to == null) {
-                return _context.Ordenes.ToList();
+            int skip = limit;
+
+            if (from == null && to == null)
+            {
+                return _context.Ordenes
+                    .Skip((page - 1) * limit)
+                    .Take(limit)
+                    .OrderBy(o => o.Fecha.Date)
+                    .ToList();
             }
-            return _context.Ordenes.Where(o => o.Fecha.Date >= from && o.Fecha.Date <= to).ToList();
+            return _context.Ordenes
+                .Where(o => o.Fecha.Date >= from && o.Fecha.Date <= to)
+                .Skip((page - 1) * limit)
+                .Take(limit)
+                .OrderBy(o => o.Fecha.Date)
+                .ToList();
+        }
+
+        public List<Orden> GetAllOrders(DateTime? from = null, DateTime? to = null)
+        {
+            if (from == null && to == null)
+            {
+                return _context.Ordenes
+                    .OrderBy(o => o.Fecha.Date)
+                    .ToList();
+            }
+            return _context.Ordenes
+                .Where(o => o.Fecha.Date >= from && o.Fecha.Date <= to)
+                .OrderBy(o => o.Fecha.Date)
+                .ToList();
         }
     }
 }
