@@ -178,17 +178,6 @@ namespace Presentation.Controllers
                     return NotFound(error);
 
                 }
-                if (agregadoProducto.cantidad < 1)
-                {
-                    var error = new ErrorDto
-                    {
-                        message = "No se puede ingresar cantidad negativa o menos de 1",
-                        statuscode = "409"
-
-                    };
-                    return Conflict(error);
-
-                }
 
                 var carrito = _carritoService.GetCarritoByClientId(agregadoProducto.ClienteId);
                 if (carrito == null)
@@ -215,7 +204,17 @@ namespace Presentation.Controllers
                         };
                         return Conflict(error);
                     }
-                    producto.Cantidad = agregadoProducto.cantidad;
+                    if(producto.Cantidad == 0)
+                    {
+                        var error = new ErrorDto
+                        {
+                            message = "No se puede tener menos de un producto en el carrito.",
+                            statuscode = "409"
+
+                        };
+                        return Conflict(error);
+                    }
+                    producto.Cantidad +=  agregadoProducto.cantidad;
                     await _carritoService.UpdateCarritoProducto(producto);
                     return NoContent();
                 }
