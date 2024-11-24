@@ -1,6 +1,7 @@
 ﻿using Application.DataAccess;
 using Domain.Entities;
 using Infraestructure.Persistance;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infraestructure.Repositories
 {
@@ -32,6 +33,11 @@ namespace Infraestructure.Repositories
 
         }
 
+        public Task<Cliente> GetClienteByEmailAndPassword(string email, string password)
+        {
+            return _context.Clientes
+           .FirstOrDefaultAsync(c => c.Mail == email && c.Password == password);
 
+        }
     }
 }

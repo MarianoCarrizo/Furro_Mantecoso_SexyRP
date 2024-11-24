@@ -1,6 +1,7 @@
 ﻿using Application.DataAccess;
 using Application.Services.Interfaces;
 using Domain.Entities;
+using Domain.Models;
 
 namespace Application.Services
 {
@@ -53,6 +54,18 @@ namespace Application.Services
         public Carrito GetRawCarritoById(Guid id)
         {
             return _CarritoRepository.GetRawCarritoById(id);
+        }
+
+        public Task<Carrito> DeleteCarrito(Guid carritoId)
+        {
+            var carrito = _CarritoRepository.GetRawCarritoById(carritoId);
+            if (carrito != null)
+            {
+                return Task.FromResult(_CarritoRepository.DeleteCarritoById(carritoId));
+            }
+            throw new FileNotFoundException("CarritoId : "+carritoId+" no encontrado");
+            
+
         }
     }
 

@@ -13,6 +13,8 @@ namespace Application.Services.Interfaces
 
         Task<CarritoProducto> DeleteCarritoProducto(CarritoProducto carrito);
 
+        Task<Carrito> DeleteCarrito(Guid carritoId);
+
         Task<CarritoProducto> UpdateCarritoProducto(CarritoProducto carrito);
 
         CarritoProducto GetCarritoProductoById(Guid id, int productoId);

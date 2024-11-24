@@ -12,11 +12,15 @@ namespace Application.DataAccess
 
         public Carrito UpdateCarrito(Carrito Carrito);
 
+        public Carrito DeleteCarritoById(Guid CarritoId);
+
         public CarritoProducto UpdateCarritoProducto(CarritoProducto carrito);
 
         public Carrito CreateCarrito(Carrito carrito);
 
         public CarritoProducto DeleteCarritoProducto(CarritoProducto carritoProducto);
+
+
 
         public CarritoProducto GetCarritoProductoById(Guid id, int productoId);
 

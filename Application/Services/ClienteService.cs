@@ -57,6 +57,24 @@ namespace Application.Services
 
         }
 
+        public async Task<ClienteDto> GetClienteByEmailAndPasword(string Email, string Password)
+        {
+            var client = await _repository.GetClienteByEmailAndPassword(Email, Password);
 
+            if(client == null)
+            {
+                throw new Exception("Datos invalidos");
+            }
+
+
+            var clienteDto = new ClienteDto()
+            {
+                Nombre = client.Nombre.ToString(),
+                Apellido = client.Apellido.ToString(),
+                ClienteId = client.ClienteId,
+            };
+
+            return await Task.FromResult(clienteDto);
+        }
     }
 }

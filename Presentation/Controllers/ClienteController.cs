@@ -40,7 +40,44 @@ namespace Presentation.Controllers
         }
 
 
-        [HttpPost]
+        // Login endpoint
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(ClienteDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
+                {
+                    return BadRequest("Email and Password are required.");
+                }
+
+                var client = await _clienteService.GetClienteByEmailAndPasword(request.Email, request.Password);
+
+                if (client != null)
+                {
+                    var LoginInfoDto = new LoginInfoDto
+                    {
+                        ClienteId = client.ClienteId,
+                        Nombre = client.Nombre
+                    };
+                    return Ok(LoginInfoDto);
+                }
+
+                return Unauthorized("Invalid email or password.");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not shown here)
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+    
+
+
+    [HttpPost]
         [ProducesResponseType(typeof(ClienteDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status409Conflict)]
         [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]

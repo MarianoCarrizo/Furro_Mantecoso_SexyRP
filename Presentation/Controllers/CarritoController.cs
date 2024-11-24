@@ -269,7 +269,7 @@ namespace Presentation.Controllers
                         statuscode = "409"
 
                     };
-                    return Conflict(error);
+                    return NoContent();
 
                 }
                 else
@@ -293,6 +293,40 @@ namespace Presentation.Controllers
             {
 
                 return BadRequest("se ha ingresado los datos en un formato incorrecto");
+            }
+
+
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteCarrito([FromQuery] Guid carritoId)
+        {
+            try
+            {
+
+                var carrito = await _carritoService.DeleteCarrito(carritoId);
+
+                return NoContent();
+            }
+
+            catch (FileNotFoundException e)
+            {
+                var error = new ErrorDto
+                {
+                    message = e.Message,
+                    statuscode = "404"
+
+                };
+                return NotFound(error);
+
+            }
+            catch (Exception e)
+            {
+              
+                return Problem(e.Message);
             }
 
 

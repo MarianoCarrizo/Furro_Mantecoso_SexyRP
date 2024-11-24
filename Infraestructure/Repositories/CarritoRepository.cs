@@ -69,5 +69,18 @@ namespace Infraestructure.Repositories
                                  .ThenInclude(carro => carro.Producto)
                                  .FirstOrDefault(d => d.CarritoId.Equals(id));
         }
+
+        public Carrito DeleteCarritoById(Guid CarritoId)
+        {
+            var carrito = _context.Carritos.FirstOrDefault(c => c.CarritoId == CarritoId);
+            if (carrito != null)
+            {
+                // Remove the found Carrito from the context
+                _context.Carritos.Remove(carrito);
+                _context.SaveChanges();
+            }
+            return carrito;
+        }
+
     }
 }

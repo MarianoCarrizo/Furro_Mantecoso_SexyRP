@@ -6,6 +6,7 @@ namespace Application.Services.Interfaces
     {
         Task<ClienteDto> GetClienteById(int id);
 
+        Task<ClienteDto> GetClienteByEmailAndPasword(String Email, String Password);
 
         Task<ClienteDto> CreateClient(ClienteDto cliente);
 
