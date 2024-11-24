@@ -7,18 +7,21 @@ namespace Application.Services.Interfaces
         Carrito GetCarritoByClientId(int id);
 
         Carrito GetCarritoById(Guid id);
+        Carrito GetRawCarritoById(Guid id);
 
-        Carrito CreateCarrito(Carrito carrito);
+        Task<Carrito> CreateCarrito(Carrito carrito);
 
-        void MostrarCarrito(Guid cliente);
+        Task<CarritoProducto> DeleteCarritoProducto(CarritoProducto carrito);
 
-        CarritoProducto DeleteCarritoProducto(CarritoProducto carrito);
+        Task<Carrito> DeleteCarrito(Guid carritoId);
+
+        Task<CarritoProducto> UpdateCarritoProducto(CarritoProducto carrito);
 
         CarritoProducto GetCarritoProductoById(Guid id, int productoId);
 
-        CarritoProducto CreateCarritoProducto(CarritoProducto carritoProducto);
 
-        Carrito UpdateCarrito(Carrito carrito);
+
+        Task<Carrito> UpdateCarrito(Carrito carrito);
 
 
 

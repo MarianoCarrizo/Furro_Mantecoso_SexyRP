@@ -1,7 +1,9 @@
 ﻿using Application.DataAccess;
 
 using Application.Services.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Models;
 
 
 namespace Application.Services
@@ -9,41 +11,44 @@ namespace Application.Services
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepository _repository;
+        private readonly IMapper _mapper;
 
 
-        public ClienteService(IClienteRepository repository)
+        public ClienteService(IClienteRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public Cliente GetClienteById(int id)
+        public async Task<ClienteDto> GetClienteById(int id)
         {
-            return _repository.GetClienteById(id);
+            var cliente = await _repository.GetClienteById(id);
+            return _mapper.Map<ClienteDto>(cliente);
         }
 
-        public Cliente CreateClient(string dni, string nombre, string apellido, string direccion, string telefono)
+        public async Task<ClienteDto> CreateClient(ClienteDto cliente)
         {
 
             try
 
             {
-                var ClientExists = _repository.GetClienteByDNI(dni);
-                if (ClientExists != null)
+                var ClientExists = _repository.GetClienteByDNI(cliente.Dni);
+                if (ClientExists.Result != null)
                 {
                     return null;
                 }
 
                 var client = new Cliente()
                 {
-                    Dni = dni,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Direccion = direccion,
-                    Telefono = telefono,
+                    Dni = cliente.Dni,
+                    Nombre = cliente.Nombre,
+                    Apellido = cliente.Apellido,
+                    Direccion = cliente.Direccion,
+                    Telefono = cliente.Telefono,
                 };
 
-                _repository.AddCliente(client);
-                return client;
+                var clientcreado = await _repository.AddCliente(client);
+                return _mapper.Map<ClienteDto>(clientcreado);
             }
             catch (Exception)
             {
@@ -52,19 +57,24 @@ namespace Application.Services
 
         }
 
-
-        public List<Cliente> ShowClientes()
+        public async Task<ClienteDto> GetClienteByEmailAndPasword(string Email, string Password)
         {
+            var client = await _repository.GetClienteByEmailAndPassword(Email, Password);
+
+            if(client == null)
+            {
+                throw new Exception("Datos invalidos");
+            }
 
 
-            List<Cliente> list = _repository.GetAllClientes();
-            return list;
+            var clienteDto = new ClienteDto()
+            {
+                Nombre = client.Nombre.ToString(),
+                Apellido = client.Apellido.ToString(),
+                ClienteId = client.ClienteId,
+            };
 
-        }
-
-        public Cliente GetClienteByDNI(string DNI)
-        {
-            return _repository.GetClienteByDNI(DNI);
+            return await Task.FromResult(clienteDto);
         }
     }
 }

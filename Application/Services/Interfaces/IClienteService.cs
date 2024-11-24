@@ -1,15 +1,14 @@
-﻿using Domain.Entities;
+﻿using Domain.Models;
 
 namespace Application.Services.Interfaces
 {
-     public interface IClienteService
-     {
-          Cliente GetClienteById(int id);
+    public interface IClienteService
+    {
+        Task<ClienteDto> GetClienteById(int id);
 
-          Cliente GetClienteByDNI(string DNI);
+        Task<ClienteDto> GetClienteByEmailAndPasword(String Email, String Password);
 
-          Cliente CreateClient(string DNI, string nombre, string apellido, string direccion, string telefono);
+        Task<ClienteDto> CreateClient(ClienteDto cliente);
 
-          List<Cliente> ShowClientes();
-     }
+    }
 }

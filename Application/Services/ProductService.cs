@@ -1,7 +1,11 @@
 ﻿using Application.DataAccess;
 
 using Application.Services.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Models;
+using System.Xml.Linq;
+
 
 namespace Application.Services
 {
@@ -10,20 +14,82 @@ namespace Application.Services
         private readonly IProductRepository _repository;
 
 
-        public ProductService(IProductRepository repository)
+
+        public ProductService(IProductRepository repository, IMapper mapper)
         {
             _repository = repository;
         }
 
-        public Producto FindProductById(int id)
+        public async Task<ProductoFindDto> FindProductById(int id)
         {
-            return _repository.GetProductById(id);
+
+            var product = _repository.GetProductById(id).Result;
+            var producto = new ProductoFindDto()
+            {
+                Nombre = product.Nombre,
+                Descripcion = product.Descripcion,
+                Marca = product.Marca,
+                Codigo = product.Codigo,
+                Image = product.Image,
+                Precio = product.Precio
+            };
+
+            return producto;
+
         }
 
-        public List<Producto> ShowProducts()
+        public async Task<Producto> FindRawProductById(int id)
         {
-            List<Producto> list = _repository.GetProductos();
-            return list;
+
+            var product = _repository.GetProductById(id).Result;
+            return product;
+
+        }
+
+
+
+        public Task<List<ProductoFindDto>> GetProducts(string? category, string? name = null, bool? sort = null)
+        {
+            var product = _repository.GetProductos(category,name, sort);
+            var lista = new List<ProductoFindDto>();
+            foreach (Producto pro in product.Result)
+            {
+                var producto = new ProductoFindDto()
+                {
+                    ProductoId = pro.ProductoId,
+                    Nombre = pro.Nombre,
+                    Precio = pro.Precio,
+                    Codigo = pro.Codigo,
+                    Categoria = pro.Categoria,
+                    Descripcion = pro.Descripcion,
+                    Marca = pro.Marca,
+                    Image = pro.Image
+                };
+                lista.Add(producto);
+            }
+            return Task.FromResult(lista);
+        }
+
+        public async Task<List<ProductoFindDto>> GetProductosByCategoryOrBrand(string? category, string? brand)
+        {
+            var product = _repository.GetProductosByCategoryOrBrand(category,brand);
+            var lista = new List<ProductoFindDto>();
+            foreach (Producto pro in product.Result)
+            {
+                var producto = new ProductoFindDto()
+                {
+                    ProductoId = pro.ProductoId,
+                    Nombre = pro.Nombre,
+                    Precio = pro.Precio,
+                    Codigo = pro.Codigo,
+                    Categoria = pro.Categoria,
+                    Descripcion = pro.Descripcion,
+                    Marca = pro.Marca,
+                    Image = pro.Image
+                };
+                lista.Add(producto);
+            }
+            return lista;
         }
     }
 }

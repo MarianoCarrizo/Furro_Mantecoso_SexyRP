@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace TP.Application.Utilities
+namespace Application.Utilities
 {
     public class MappingProfile : Profile
     {

@@ -5,13 +5,12 @@ namespace Application.DataAccess
     public interface IClienteRepository
     {
 
-        public Cliente GetClienteById(int id);
+        public Task<Cliente> GetClienteById(int id);
+        public Task<Cliente> AddCliente(Cliente cliente);
 
-        public void UpdateCliente(Cliente cliente);
+        public Task<Cliente> GetClienteByEmailAndPassword(string email, string password);
 
-        public Cliente AddCliente(Cliente cliente);
-        public Cliente GetClienteByDNI(string DNI);
+        public Task<Cliente> GetClienteByDNI(string DNI);
 
-        public List<Cliente> GetAllClientes();
     }
 }

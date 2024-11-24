@@ -1,9 +1,9 @@
 ﻿using Application.DataAccess;
 using Domain.Entities;
-using Infraestructure.Persistence;
+using Infraestructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infraestructure.Repositories
 {
     public class CarritoRepository : ICarritoRepository
     {
@@ -20,14 +20,6 @@ namespace Infrastructure.Repositories
             _context.SaveChanges();
             return carrito;
         }
-
-        public CarritoProducto CreateCarritoProducto(CarritoProducto carritoProducto)
-        {
-            _context.CarritoProductos.Add(carritoProducto);
-            _context.SaveChanges();
-            return carritoProducto;
-        }
-
         public CarritoProducto GetCarritoProductoById(Guid id, int Id)
         {
             return _context.CarritoProductos.FirstOrDefault(d => d.CarritoId == id && d.ProductoId == Id);
@@ -49,12 +41,6 @@ namespace Infrastructure.Repositories
                                     .FirstOrDefault(d => d.CarritoId.Equals(id) && d.Estado == true);
         }
 
-
-        public bool IsActive(int id)
-        {
-            return _context.Carritos.Any(d => d.CarritoId.Equals(id) && d.Estado == true);
-        }
-
         public CarritoProducto DeleteCarritoProducto(CarritoProducto carritoProducto)
         {
             _context.CarritoProductos.Remove(carritoProducto);
@@ -62,10 +48,6 @@ namespace Infrastructure.Repositories
             return carritoProducto;
         }
 
-        public Carrito FindCarritoByClient(int Id)
-        {
-            return _context.Carritos.FirstOrDefault(d => d.ClienteId == Id && d.Estado == true);
-        }
 
         public Carrito UpdateCarrito(Carrito Carrito)
         {
@@ -74,6 +56,31 @@ namespace Infrastructure.Repositories
             return Carrito;
         }
 
+        public CarritoProducto UpdateCarritoProducto(CarritoProducto carrito)
+        {
+            _context.CarritoProductos.Update(carrito);
+            _context.SaveChanges();
+            return carrito;
+        }
+
+        public Carrito GetRawCarritoById(Guid id)
+        {
+            return _context.Carritos.Include(Carrito => Carrito.CarritoProductos)
+                                 .ThenInclude(carro => carro.Producto)
+                                 .FirstOrDefault(d => d.CarritoId.Equals(id));
+        }
+
+        public Carrito DeleteCarritoById(Guid CarritoId)
+        {
+            var carrito = _context.Carritos.FirstOrDefault(c => c.CarritoId == CarritoId);
+            if (carrito != null)
+            {
+                // Remove the found Carrito from the context
+                _context.Carritos.Remove(carrito);
+                _context.SaveChanges();
+            }
+            return carrito;
+        }
 
     }
 }

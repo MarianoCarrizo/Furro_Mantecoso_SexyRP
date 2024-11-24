@@ -1,8 +1,9 @@
 ﻿using Application.DataAccess;
 using Domain.Entities;
-using Infraestructure.Persistence;
+using Infraestructure.Persistance;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
+namespace Infraestructure.Repositories
 {
     public class ClienteRepository : IClienteRepository
     {
@@ -13,45 +14,30 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public Cliente AddCliente(Cliente cliente)
+        public async Task<Cliente> AddCliente(Cliente cliente)
         {
             _context.Add(cliente);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return cliente;
         }
 
-        public Cliente GetClienteById(int id)
+        public async Task<Cliente> GetClienteById(int id)
         {
 
             return _context.Clientes.Find(id);
         }
-
-        public List<Cliente> GetClientes(string? nombre = null, string? apellido = null, string? dni = null)
-        {
-            return _context.Clientes.
-                                    Where(Client => (string.IsNullOrEmpty(nombre) || Client.Nombre == nombre) &&
-                                    (string.IsNullOrEmpty(apellido) || Client.Apellido == apellido) &&
-                                    (string.IsNullOrEmpty(dni) || Client.Dni == dni)).ToList();
-        }
-
-        public List<Cliente> GetAllClientes()
-        {
-            return _context.Clientes.ToList();
-        }
-
-        public void UpdateCliente(Cliente cliente)
-        {
-            _context.Clientes.Update(cliente);
-            _context.SaveChanges();
-        }
-
-        public Cliente GetClienteByDNI(string DNI)
+        public async Task<Cliente> GetClienteByDNI(string DNI)
         {
             return _context.Clientes.FirstOrDefault(client => client.Dni == DNI);
 
         }
 
+        public Task<Cliente> GetClienteByEmailAndPassword(string email, string password)
+        {
+            return _context.Clientes
+           .FirstOrDefaultAsync(c => c.Mail == email && c.Password == password);
 
+        }
     }
 }

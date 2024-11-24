@@ -1,11 +1,9 @@
 ﻿using Application.DataAccess;
 using Application.Services;
 using Application.Services.Interfaces;
-using Infraestructure.Persistence;
-using Infrastructure.Repositories;
+using Infraestructure.Persistance;
+using Infraestructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Presentation
 {
@@ -13,37 +11,52 @@ namespace Presentation
     {
         static void Main(string[] args)
         {
-            var serviceProvider = CreateServiceProvider();
-            Menu menu = new(serviceProvider);
-            menu.StartMenu();
-
-        }
-        static IServiceProvider CreateServiceProvider()
-        {
-            var collection = new ServiceCollection();
-
-            var configBuilder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-                                                          .AddJsonFile("appsettings.json", optional: false);
-
+            var builder = WebApplication.CreateBuilder(args);
+            var configBuilder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", optional: false);
             IConfiguration configuration = configBuilder.Build();
+            string connectionString = configuration.GetSection("ConnectionString").Value;
 
-            var connectionString = configuration.GetSection("ConnectionString").Value;
 
 
-            collection.AddTransient<IClienteRepository, ClienteRepository>();
-            collection.AddTransient<IOrdenRepository, OrdenRepository>();
-            collection.AddTransient<IOrdenService, OrdenService>();
-            collection.AddTransient<ICarritoRepository, CarritoRepository>();
-            collection.AddTransient<ICarritoService, CarritoService>();
-            collection.AddTransient<IProductService, ProductService>();
-            collection.AddTransient<IProductRepository, ProductRepository>();
-            collection.AddTransient<IClienteService, ClienteService>();
-            collection.AddTransient<IVentaRepository, VentaRepository>();
-            collection.AddTransient<IVentasService, VentasService>();
-            collection.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
+            builder.Services.AddControllers();
 
-            return collection.BuildServiceProvider();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(connectionString));
+            builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
+            builder.Services.AddTransient<IProductRepository, ProductRepository>();
+            builder.Services.AddTransient<IProductService, ProductService>();
+            builder.Services.AddTransient<ICarritoRepository, CarritoRepository>();
+            builder.Services.AddTransient<ICarritoService, CarritoService>();
+            builder.Services.AddTransient<IOrdenRepository, OrdenRepository>();
+            builder.Services.AddTransient<IClienteService, ClienteService>();
+            builder.Services.AddTransient<IOrdenService, OrdenService>();
+            builder.Services.AddAutoMapper(typeof(Program));
 
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.DocumentTitle = "BACKEND";
+                });
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+            app.MapControllers();
+
+            app.Run();
         }
     }
 }
