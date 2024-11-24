@@ -9,78 +9,90 @@ namespace Infraestructure.Repositories
     {
         private readonly AppDbContext _context;
 
+        /// <summary>
+        /// The constructor of the CarritoRepository.
+        /// </summary>
+        /// <param name="appDbContext">An instance of the Db Context.</param>
         public CarritoRepository(AppDbContext appDbContext)
         {
-            _context = appDbContext;
+            _context = appDbContext ?? throw new NullReferenceException(nameof(appDbContext));
         }
 
-        public Carrito CreateCarrito(Carrito carrito)
+        /// <inheritdoc/>
+        public async Task<Carrito> CreateCarrito(Carrito carrito)
         {
-            _context.Carritos.Add(carrito);
-            _context.SaveChanges();
+            await _context.Carritos.AddAsync(carrito);
+            await _context.SaveChangesAsync();
             return carrito;
         }
-        public CarritoProducto GetCarritoProductoById(Guid id, int Id)
+
+        /// <inheritdoc/>
+        public async Task<CarritoProducto?> GetCarritoProductoById(Guid id, int Id)
         {
-            return _context.CarritoProductos.FirstOrDefault(d => d.CarritoId == id && d.ProductoId == Id);
+            return await _context.CarritoProductos.FirstOrDefaultAsync(d => d.CarritoId == id && d.ProductoId == Id);
         }
 
-        public Carrito GetCarritoByClientId(int Id)
+        /// <inheritdoc/>
+        public async Task<Carrito?> GetCarritoByClientId(int Id)
         {
-
-
-            return _context.Carritos.Include(Carrito => Carrito.CarritoProductos)
+            return await _context.Carritos.Include(Carrito => Carrito.CarritoProductos)
                                     .ThenInclude(carro => carro.Producto)
-                                    .FirstOrDefault(d => d.ClienteId.Equals(Id) && d.Estado == true);
+                                    .FirstOrDefaultAsync(d => d.ClienteId.Equals(Id) && d.Estado == true);
         }
 
-        public Carrito GetCarritoById(Guid id)
+        /// <inheritdoc/>
+        public async Task<Carrito?> GetCarritoById(Guid id)
         {
-            return _context.Carritos.Include(Carrito => Carrito.CarritoProductos)
+            return await _context.Carritos.Include(Carrito => Carrito.CarritoProductos)
                                     .ThenInclude(carro => carro.Producto)
-                                    .FirstOrDefault(d => d.CarritoId.Equals(id) && d.Estado == true);
+                                    .FirstOrDefaultAsync(d => d.CarritoId.Equals(id) && d.Estado == true);
         }
 
-        public CarritoProducto DeleteCarritoProducto(CarritoProducto carritoProducto)
+        /// <inheritdoc/>
+        public async Task<CarritoProducto?> DeleteCarritoProducto(CarritoProducto carritoProducto)
         {
             _context.CarritoProductos.Remove(carritoProducto);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return carritoProducto;
         }
 
-
-        public Carrito UpdateCarrito(Carrito Carrito)
+        /// <inheritdoc/>
+        public async Task<Carrito?> UpdateCarrito(Carrito Carrito)
         {
             _context.Update(Carrito);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Carrito;
         }
 
-        public CarritoProducto UpdateCarritoProducto(CarritoProducto carrito)
+        /// <inheritdoc/>
+        public async Task<CarritoProducto?> UpdateCarritoProducto(CarritoProducto carrito)
         {
             _context.CarritoProductos.Update(carrito);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return carrito;
         }
 
-        public Carrito GetRawCarritoById(Guid id)
+        /// <inheritdoc/>
+        public async Task<Carrito?> GetRawCarritoById(Guid id)
         {
-            return _context.Carritos.Include(Carrito => Carrito.CarritoProductos)
+            return await _context.Carritos.Include(Carrito => Carrito.CarritoProductos)
                                  .ThenInclude(carro => carro.Producto)
-                                 .FirstOrDefault(d => d.CarritoId.Equals(id));
+                                 .FirstOrDefaultAsync(d => d.CarritoId.Equals(id));
         }
 
-        public Carrito DeleteCarritoById(Guid CarritoId)
+        /// <inheritdoc/>
+        public async Task<Carrito?> DeleteCarritoById(Guid CarritoId)
         {
-            var carrito = _context.Carritos.FirstOrDefault(c => c.CarritoId == CarritoId);
+            var carrito = await _context.Carritos.FirstOrDefaultAsync(c => c.CarritoId == CarritoId);
+
             if (carrito != null)
             {
                 // Remove the found Carrito from the context
                 _context.Carritos.Remove(carrito);
                 _context.SaveChanges();
             }
+
             return carrito;
         }
-
     }
 }

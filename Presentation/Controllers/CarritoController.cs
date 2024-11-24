@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
+    /// <summary>
+    /// Controller for carrito operations. 
+    /// </summary>
     [Route("api/carrito")]
     [ApiController]
     public class CarritoController : ControllerBase
@@ -16,20 +19,32 @@ namespace Presentation.Controllers
         private readonly IClienteService _clienteService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Constructor for CarritoController
+        /// </summary>
+        /// <param name="carritoService">An instance of CarritoService.</param>
+        /// <param name="productoService">An instance of ProductoService</param>
+        /// <param name="clienteService">An instance of ClienteService</param>
+        /// <param name="mapper">An instance of the mapping profile from AutoMapper.</param>
         public CarritoController(ICarritoService carritoService, IProductService productoService, IClienteService clienteService, IMapper mapper)
         {
+            //Notes from Konta: The descriptions in the summary are deliveratelly vague. The idea is showing you that you are expected to document these parameters and give them a meaningful description.
             _carritoService = carritoService;
             _productService = productoService;
             _clienteService = clienteService;
             _mapper = mapper;
         }
 
-
+        /// <summary>
+        /// This is an action method to obtain an existing carrito given a valid id. If the provided id does not match with an existing carrito, a NotFound response will be returned.
+        /// </summary>
+        /// <param name="id">The id of the carrito.</param>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(CarritoDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> getCarritoById(int id)
+        public async Task<IActionResult> GetCarritoById(int id)
         {
             try
             {
@@ -204,7 +219,7 @@ namespace Presentation.Controllers
                         };
                         return Conflict(error);
                     }
-                    if(producto.Cantidad == 0)
+                    if (producto.Cantidad == 0)
                     {
                         var error = new ErrorDto
                         {
@@ -214,7 +229,7 @@ namespace Presentation.Controllers
                         };
                         return Conflict(error);
                     }
-                    producto.Cantidad +=  agregadoProducto.cantidad;
+                    producto.Cantidad += agregadoProducto.cantidad;
                     await _carritoService.UpdateCarritoProducto(producto);
                     return NoContent();
                 }
@@ -325,7 +340,7 @@ namespace Presentation.Controllers
             }
             catch (Exception e)
             {
-              
+
                 return Problem(e.Message);
             }
 

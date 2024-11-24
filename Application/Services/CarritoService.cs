@@ -1,7 +1,6 @@
 ﻿using Application.DataAccess;
 using Application.Services.Interfaces;
 using Domain.Entities;
-using Domain.Models;
 
 namespace Application.Services
 {
@@ -11,22 +10,22 @@ namespace Application.Services
 
         public CarritoService(ICarritoRepository repoC)
         {
-            _CarritoRepository = repoC;
+            _CarritoRepository = repoC ?? throw new NullReferenceException(nameof(repoC));
         }
 
-        public Carrito GetCarritoByClientId(int id)
+        public async Task<Carrito?> GetCarritoByClientId(int id)
         {
-            return _CarritoRepository.GetCarritoByClientId(id);
+            return await _CarritoRepository.AddAsync(id);
         }
 
-        public Carrito GetCarritoById(Guid id)
+        public async Task<Carrito?> GetCarritoById(Guid id)
         {
-            return _CarritoRepository.GetCarritoById(id);
+            return await _CarritoRepository.CreateCarrito(id);
         }
 
         public async Task<Carrito> UpdateCarrito(Carrito carrito)
         {
-            return _CarritoRepository.UpdateCarrito(carrito);
+            return await _CarritoRepository.AddAsync(carrito);
         }
 
         public async Task<CarritoProducto> DeleteCarritoProducto(CarritoProducto carrito)
@@ -63,8 +62,8 @@ namespace Application.Services
             {
                 return Task.FromResult(_CarritoRepository.DeleteCarritoById(carritoId));
             }
-            throw new FileNotFoundException("CarritoId : "+carritoId+" no encontrado");
-            
+            throw new FileNotFoundException("CarritoId : " + carritoId + " no encontrado");
+
 
         }
     }
