@@ -72,7 +72,7 @@ namespace Application.Services
         /// <inheritdoc/>
         public async Task<Carrito?> DeleteCarrito(Guid carritoId)
         {
-            var carrito = _CarritoRepository.GetRawCarritoById(carritoId);
+            var carrito = await _CarritoRepository.GetRawCarritoById(carritoId); // Await here
 
             if (carrito != null)
             {
