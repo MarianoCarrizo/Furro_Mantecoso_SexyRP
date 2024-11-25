@@ -61,7 +61,7 @@ namespace Presentation.Controllers
                 else
                 {
                     decimal total = 0;
-                    foreach (CarritoProducto producto in carrito.CarritoProductos)
+                    foreach (CarritoProducto producto in carrito.Result.CarritoProductos)
                     {
                         total += producto.Producto.Precio * producto.Cantidad;
 
@@ -69,14 +69,14 @@ namespace Presentation.Controllers
                     var Orden = new Orden
                     {
                         OrdenId = Guid.NewGuid(),
-                        CarritoId = carrito.CarritoId,
+                        CarritoId = carrito.Result.CarritoId,
                         Total = total,
                         Fecha = DateTime.Now
 
                     };
                     _ordenService.CreateOrden(Orden);
-                    carrito.Estado = false;
-                    await _carritoService.UpdateCarrito(carrito);
+                    carrito.Result.Estado = false;
+                    await _carritoService.UpdateCarrito(carrito.Result);
                     return Ok("Se ha creado una Orden");
                 }
             }

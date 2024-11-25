@@ -45,12 +45,12 @@ namespace Application.Services
                 List<ProductoDto> productos = new List<ProductoDto>();
                 var carrito = _carritoService.GetRawCarritoById(item.CarritoId);
 
-                foreach (var product in carrito.CarritoProductos)
+                foreach (var product in carrito.Result.CarritoProductos)
                 {
                     productos.Add(_mapper.Map<ProductoDto>(product.Producto));
                 }
                 var ordenMapeada = _mapper.Map<OrdenDto>(item);
-                var cliente = _clienteRepository.GetClienteById(carrito.ClienteId);
+                var cliente = _clienteRepository.GetClienteById(carrito.Result.ClienteId);
                 ordenMapeada.Productos = productos;
                 ordenMapeada.ClienteNombre = cliente.Result.Nombre;
                 ordenMapeada.ClienteId = cliente.Result.ClienteId;
